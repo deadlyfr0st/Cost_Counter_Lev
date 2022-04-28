@@ -6,13 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="Proba2" />
         <module name="Cost_Counter_Lev" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="Cost_Counter_Lev" target="11" />
-      <module name="Proba2" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>
