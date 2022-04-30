@@ -12,6 +12,14 @@ public class PersonData {
 
     private String name;
 
+    public PersonData() {
+    }
+
+    public PersonData(Integer id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public Integer getId() {
         return id;
     }

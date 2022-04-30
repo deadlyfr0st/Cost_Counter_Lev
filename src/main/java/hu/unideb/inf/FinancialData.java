@@ -22,6 +22,9 @@ public class FinancialData {
     private int cost;
     private LocalDate dateOfPurchase;
 
+    public FinancialData() {
+    }
+
     public FinancialData(int cost, LocalDate dateOfPurchase) {
         this.cost = cost;
         this.dateOfPurchase = dateOfPurchase;
@@ -43,7 +46,4 @@ public class FinancialData {
         this.dateOfPurchase = dateOfPurchase;
     }
 
-    public static void main(String[] args) {
-        FinancialData d = new FinancialData(1,LocalDate.of(2000,12,2));
-    }
 }

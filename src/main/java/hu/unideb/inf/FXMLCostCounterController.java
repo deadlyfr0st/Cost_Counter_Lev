@@ -15,15 +15,17 @@ import javafx.scene.layout.AnchorPane;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.ResourceBundle;
 
 public class FXMLCostCounterController implements Initializable {
+
+    PersonData personData = new PersonData();
+
+    FinancialData financialData = new FinancialData();
 
     @FXML
     private Button handleAverageButtonPushed;
@@ -45,11 +47,10 @@ public class FXMLCostCounterController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-        CostTypeChoiceBox.getItems().addAll(costType);
-        CostTypeChoiceBox1.getItems().addAll(costType);
-        nameChoiceBox.getItems().addAll(costType);
-        nameChoiceBox1.getItems().addAll(names);
+        CostTypeChoiceBox.getItems().addAll(Arrays.toString(financialData.getTypeOfCost()));
+        CostTypeChoiceBox1.getItems().addAll(Arrays.toString(financialData.getTypeOfCost()));
+        nameChoiceBox.getItems().addAll(personData.getName());
+        nameChoiceBox1.getItems().addAll(personData.getName());
     }
 
 
