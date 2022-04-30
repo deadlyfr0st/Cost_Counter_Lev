@@ -34,13 +34,13 @@ public class FXMLCostCounterController implements Initializable {
     @FXML
     private Button handleRegisterButtonPushed;
     @FXML
-    private TextField handleNameTypeing;
+    private TextField handleNameTyping;
     @FXML
-    private TextField handleDateFromTypeing;
+    private TextField handleDateFromTyping;
     @FXML
-    private TextField handleDateToTypeing;
+    private TextField handleDateToTyping;
     @FXML
-    private TextField handleDateTypeing;
+    private TextField handleDateTyping;
 
 
     @Override
@@ -104,17 +104,17 @@ public class FXMLCostCounterController implements Initializable {
     }
 
     @FXML
-    void handleDateFromTypeing(ActionEvent event) {
+    void handleDateFromTyping(ActionEvent event) {
 
     }
 
     @FXML
-    void handleDateToTypeing(ActionEvent event) {
+    void handleDateToTyping(ActionEvent event) {
 
     }
 
     @FXML
-    void handleDateTypeing(ActionEvent event) {
+    void handleDateTyping(ActionEvent event) {
 
     }
 
@@ -124,20 +124,20 @@ public class FXMLCostCounterController implements Initializable {
     }
 
     @FXML
-    void handleNameTypeing(ActionEvent event) {
+    void handleNameTyping(ActionEvent event) {
 
     }
 
     @FXML
     void handleRegisterButtonPushed(ActionEvent event) {
 
-        // A handleNameTypeing.getValu -t kell menteni az adatbázisba.
+        // A handleNameTyping.getValu -t kell menteni az adatbázisba.
         // JPA ban megvan a save metódus
 
     }
 
     @FXML
-    void handlePriceTypeing(ActionEvent event) {
+    void handlePriceTyping(ActionEvent event) {
 
     }
 

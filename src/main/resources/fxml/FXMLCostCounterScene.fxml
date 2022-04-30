@@ -53,7 +53,7 @@
                      <children>
                         <HBox prefHeight="90.0" prefWidth="629.0" spacing="10.0">
                            <children>
-                              <TextField alignment="CENTER" onAction="#handleNameTypeing" prefHeight="25.0" prefWidth="137.0" text="új felhasználó">
+                              <TextField alignment="CENTER" onAction="#handleNameTyping" prefHeight="25.0" prefWidth="137.0" text="új felhasználó">
                                  <opaqueInsets>
                                     <Insets />
                                  </opaqueInsets>
@@ -90,8 +90,8 @@
                            <children>
                               <ChoiceBox fx:id="nameChoiceBox" prefWidth="150.0" />
                               <ChoiceBox fx:id="CostTypeChoiceBox" prefWidth="150.0" />
-                              <TextField onAction="#handleDateTypeing" text="dátum" />
-                              <TextField onAction="#handlePriceTypeing" text="összeg" />
+                              <TextField onAction="#handleDateTyping" text="dátum" />
+                              <TextField onAction="#handlePriceTyping" text="összeg" />
                            </children>
                            <VBox.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="20.0" />
@@ -121,8 +121,8 @@
                            <children>
                               <ChoiceBox fx:id="nameChoiceBox" prefWidth="150.0" />
                               <ChoiceBox fx:id="CostTypeChoiceBox" prefWidth="150.0" />
-                              <TextField onAction="#handleDateFromTypeing" text="dátum-tól" />
-                              <TextField onAction="#handleDateToTypeing" prefHeight="25.0" prefWidth="137.0" text="dátum-ig">
+                              <TextField onAction="#handleDateFromTyping" text="dátum-tól" />
+                              <TextField onAction="#handleDateToTyping" prefHeight="25.0" prefWidth="137.0" text="dátum-ig">
                                  <opaqueInsets>
                                     <Insets />
                                  </opaqueInsets>
