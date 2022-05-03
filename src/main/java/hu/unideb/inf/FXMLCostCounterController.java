@@ -27,6 +27,8 @@ public class FXMLCostCounterController implements Initializable {
 
     FinancialData financialData = new FinancialData();
 
+
+
     @FXML
     private Button handleAverageButtonPushed;
     @FXML
@@ -43,7 +45,8 @@ public class FXMLCostCounterController implements Initializable {
     private TextField handleDateToTyping;
     @FXML
     private TextField handleDateTyping;
-
+    @FXML
+    private TextField handlePriceTyping;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -59,6 +62,11 @@ public class FXMLCostCounterController implements Initializable {
     //végleges adatokra kell cserélni ez csak a teszthez van
     private String[] costType = {"étel", "szórakozás", "utazás"};
     private String[] names = {"Piri", "Mari", "Béla"}; //
+    private String nameInput;
+    private LocalDate dataInput;
+    private int priceInput;
+    private String tyepInput;
+
 
 
     @FXML
@@ -102,10 +110,48 @@ public class FXMLCostCounterController implements Initializable {
     @FXML
     void handleDataUpLoadButtonPushed(ActionEvent event) {
 
+        if (!handleDateTyping.getText().isEmpty() && CostTypeChoiceBox1.isPressed() && !handlePriceTyping.getText().isEmpty())  {
+            dataInput = LocalDate.parse(handleDateTyping.getText());
+            priceInput = Integer.parseInt(handlePriceTyping.getText());
+            tyepInput = CostTypeChoiceBox1.getValue();
+            // olyan metódus kell ami a táblázatba rögzíti a kapott értékeket !!!
+        }
+        else {
+            if (handleDateTyping.getText().isEmpty()) {
+                System.out.println("Adjon meg értéket mindkét helyre");
+
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("Hiányzó adat!");
+                alert.setHeaderText("Dátum megadása szükséges!");
+                alert.setContentText("Dátum megadásánál figyeljen a helyes formátumra!\n Példa: 2022.01.01");
+                alert.showAndWait();
+            }
+            if (handlePriceTyping.getText().isEmpty()) {
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("Hiányzó adat!");
+                alert.setHeaderText("Összeg megadása szükséges!");
+                alert.setContentText("Összeg megadásánál figyeljen a helyes formátumra!\n Példa: 12500");
+                alert.showAndWait();
+            }
+            if (!CostTypeChoiceBox1.isPressed()) {
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("Hiányzó adat!");
+                alert.setHeaderText("Költség kategória megadása szükséges!");
+                alert.setContentText("Kérjük a lenyíló listából válaszon kategóriát!");
+                alert.showAndWait();
+            }
+        }
+
     }
 
     @FXML
     void handleDateFromTyping(ActionEvent event) {
+
+    }
+
+
+    @FXML
+    void handlePriceTyping(ActionEvent event) {
 
     }
 
@@ -126,21 +172,28 @@ public class FXMLCostCounterController implements Initializable {
 
     @FXML
     void handleNameTyping(ActionEvent event) {
-
     }
+
+
 
     @FXML
     void handleRegisterButtonPushed(ActionEvent event) {
+            if (!handleNameTyping.getText().isEmpty() ) {
+                nameInput = handleNameTyping.getText();
+                //savePersonData(handleNameTyping.getText());// kell egy metódus ami az adatbázisba adat rögzítésért felel
+        }
+            else {
+                System.out.println("Adjon meg értéket mindkét helyre");
 
-        // A handleNameTyping.getValu -t kell menteni az adatbázisba.
-        // JPA ban megvan a save metódus
-
+                Alert nevAlert = new Alert(AlertType.INFORMATION);
+                nevAlert.setTitle("Hiányzó adat!");
+                nevAlert.setHeaderText(null);
+                nevAlert.setContentText("Név megadása szükséges!");
+                nevAlert.showAndWait();
+            }
     }
 
-    @FXML
-    void handlePriceTyping(ActionEvent event) {
 
-    }
 
 
 }
