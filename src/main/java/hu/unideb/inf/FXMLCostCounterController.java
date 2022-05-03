@@ -65,55 +65,61 @@ public class FXMLCostCounterController implements Initializable {
     private String nameInput;
     private LocalDate dataInput;
     private int priceInput;
-    private String tyepInput;
+    private String tyepchoice;
+    private String namechoice;
 
 
 
-    @FXML
-    private ChoiceBox<String> CostTypeChoiceBox; //költség típus lenyíló menü
-
-    @FXML
-    private ChoiceBox<String> CostTypeChoiceBox1;  //költség típus lenyíló menü
+    // választható opciók (lenyíló fülek)
 
     @FXML
-    private ChoiceBox<String> nameChoiceBox; // név lenyíló menü
+    private ChoiceBox<String> CostTypeChoiceBox; //költség típus lenyíló menü a költség felvétel fülön
 
     @FXML
-    private ChoiceBox<String> nameChoiceBox1; // név lenyíló menü
+    private ChoiceBox<String> CostTypeChoiceBox1;  //költség típus lenyíló menü a keresés fülön
+
+    @FXML
+    private ChoiceBox<String> nameChoiceBox; // név lenyíló menü a költség felvétel fülön
+
+    @FXML
+    private ChoiceBox<String> nameChoiceBox1; // név lenyíló menü a keresés fülön
 
     // A táblázatok vezérlése
 
     @FXML
     private TableView<PersonData> tableView;
-
     @FXML
     private TableColumn<FinancialData, LocalDate> DateFromColumn;
-
     @FXML
     private TableColumn<FinancialData, LocalDate> DateToColumn;
-
     @FXML
     private TableColumn<PersonData, String> NameColumn;
-
     @FXML
     private TableColumn<FinancialData, Integer> PriceColumn;
-
     @FXML
     private TableColumn<FinancialData, String> TypeColumn;
-
     // Gombok vezérlése
+
     @FXML
     void handleAverageButtonPushed(ActionEvent event) {
 
+        // csak teszt céljából van itt
+        Alert nevAlert = new Alert(AlertType.INFORMATION);
+        nevAlert.setTitle("TESZT");
+        nevAlert.setHeaderText(null);
+        nevAlert.setContentText("Átlag gomb működik!");
+        nevAlert.showAndWait();;
     }
 
     @FXML
     void handleDataUpLoadButtonPushed(ActionEvent event) {
 
-        if (!handleDateTyping.getText().isEmpty() && CostTypeChoiceBox1.isPressed() && !handlePriceTyping.getText().isEmpty())  {
+        if (!handleDateTyping.getText().isEmpty() && CostTypeChoiceBox1.isPressed() && !handlePriceTyping.getText().isEmpty() && nameChoiceBox1.isPressed())  {
             dataInput = LocalDate.parse(handleDateTyping.getText());
             priceInput = Integer.parseInt(handlePriceTyping.getText());
-            tyepInput = CostTypeChoiceBox1.getValue();
+            tyepchoice = CostTypeChoiceBox1.getValue();
+            namechoice = nameChoiceBox1.getValue();
+
             // olyan metódus kell ami a táblázatba rögzíti a kapott értékeket !!!
         }
         else {
@@ -140,41 +146,45 @@ public class FXMLCostCounterController implements Initializable {
                 alert.setContentText("Kérjük a lenyíló listából válaszon kategóriát!");
                 alert.showAndWait();
             }
+            if (!nameChoiceBox1.isPressed()) {
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("Hiányzó adat!");
+                alert.setHeaderText("Név megadása szükséges!");
+                alert.setContentText("Kérjük a lenyíló listából válasza ki a megfelő nevet!");
+                alert.showAndWait();
+            }
         }
 
     }
 
+    /*
     @FXML
     void handleDateFromTyping(ActionEvent event) {
-
     }
-
-
     @FXML
     void handlePriceTyping(ActionEvent event) {
-
     }
-
     @FXML
     void handleDateToTyping(ActionEvent event) {
-
     }
-
     @FXML
     void handleDateTyping(ActionEvent event) {
-
     }
+    @FXML
+    void handleNameTyping(ActionEvent event) {
+    }
+    */
 
     @FXML
     void handleSearchButtonPushed(ActionEvent event) {
 
+        //csak teszt céljából van itt
+        Alert nevAlert = new Alert(AlertType.INFORMATION);
+        nevAlert.setTitle("TESZT");
+        nevAlert.setHeaderText(null);
+        nevAlert.setContentText("Keresés gomb működik!");
+        nevAlert.showAndWait();;
     }
-
-    @FXML
-    void handleNameTyping(ActionEvent event) {
-    }
-
-
 
     @FXML
     void handleRegisterButtonPushed(ActionEvent event) {

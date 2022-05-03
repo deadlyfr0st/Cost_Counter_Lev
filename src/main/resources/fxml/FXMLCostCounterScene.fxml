@@ -53,7 +53,7 @@
                      <children>
                         <HBox prefHeight="90.0" prefWidth="629.0" spacing="10.0">
                            <children>
-                              <TextField alignment="CENTER" onAction="#handleNameTyping" prefHeight="25.0" prefWidth="137.0" text="új felhasználó">
+                              <TextField fx:id="handleNameTyping" alignment="CENTER" prefHeight="25.0" prefWidth="137.0" text="új felhasználó">
                                  <opaqueInsets>
                                     <Insets />
                                  </opaqueInsets>
@@ -67,16 +67,17 @@
                            </VBox.margin>
                         </HBox>
                         <HBox prefHeight="129.0" prefWidth="625.0" spacing="15.0">
-                           <children>
-                              <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleRegisterButtonPushed" prefHeight="31.0" prefWidth="170.0" text="REGISZTRÁLÁS">
-                                 <HBox.margin>
-                                    <Insets bottom="20.0" left="215.0" right="20.0" top="20.0" />
-                                 </HBox.margin>
-                              </Button>
-                           </children>
                            <VBox.margin>
-                              <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
+                              <Insets bottom="7.0" left="7.0" right="7.0" top="7.0"/>
                            </VBox.margin>
+                           <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false"
+                                   prefHeight="31.0" prefWidth="170.0"
+                                   text="REGISZTRÁLÁS">
+                              <onAction>#handleRegisterButtonPushed</onAction>
+                              <HBox.margin>
+                                 <Insets bottom="20.0" left="215.0" right="20.0" top="20.0"/>
+                              </HBox.margin>
+                           </Button>
                         </HBox>
                      </children>
                   </VBox>
@@ -90,8 +91,8 @@
                            <children>
                               <ChoiceBox fx:id="nameChoiceBox" prefWidth="150.0" />
                               <ChoiceBox fx:id="CostTypeChoiceBox" prefWidth="150.0" />
-                              <TextField onAction="#handleDateTyping" text="dátum" />
-                              <TextField onAction="#handlePriceTyping" text="összeg" />
+                              <TextField fx:id="handleDateTyping" text="dátum" />
+                              <TextField fx:id="handlePriceTyping" text="összeg" />
                            </children>
                            <VBox.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="20.0" />
@@ -99,7 +100,8 @@
                         </HBox>
                         <HBox prefHeight="74.0" prefWidth="625.0" spacing="15.0">
                            <children>
-                              <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleDataUpLoadButtonPushed" prefHeight="31.0" prefWidth="151.0" text="ADAT FELTÖLTÉS">
+                              <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="31.0" prefWidth="151.0" text="ADAT FELTÖLTÉS">
+                                 <onAction>#handleDataUpLoadButtonPushed</onAction>
                                  <HBox.margin>
                                     <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                                  </HBox.margin>
@@ -119,10 +121,10 @@
                      <children>
                         <HBox prefHeight="27.0" prefWidth="629.0" spacing="10.0">
                            <children>
-                              <ChoiceBox fx:id="nameChoiceBox" prefWidth="150.0" />
-                              <ChoiceBox fx:id="CostTypeChoiceBox" prefWidth="150.0" />
-                              <TextField onAction="#handleDateFromTyping" text="dátum-tól" />
-                              <TextField onAction="#handleDateToTyping" prefHeight="25.0" prefWidth="137.0" text="dátum-ig">
+                              <ChoiceBox fx:id="nameChoiceBox1" prefWidth="150.0" />
+                              <ChoiceBox fx:id="CostTypeChoiceBox1" prefWidth="150.0" />
+                              <TextField fx:id="handleDateFromTyping" text="dátum-tól" />
+                              <TextField fx:id="handleDateToTyping" prefHeight="25.0" prefWidth="137.0" text="dátum-ig">
                                  <opaqueInsets>
                                     <Insets />
                                  </opaqueInsets>
@@ -134,8 +136,12 @@
                         </HBox>
                         <HBox prefHeight="30.0" prefWidth="625.0" spacing="15.0">
                            <children>
-                              <Button mnemonicParsing="false" onAction="#handleSearchButtonPushed" prefHeight="30.0" prefWidth="85.0" text="KERESÉS" />
-                              <Button mnemonicParsing="false" onAction="#handleAverageButtonPushed" prefHeight="30.0" prefWidth="91.0" text="ÁTLAG" />
+                              <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="85.0" text="KERESÉS" >
+                                 <onAction>#handleSearchButtonPushed</onAction>
+                              </Button>
+                              <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="91.0" text="ÁTLAG" >
+                                 <onAction>#handleAverageButtonPushed</onAction>
+                              </Button>
                            </children>
                            <VBox.margin>
                               <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
