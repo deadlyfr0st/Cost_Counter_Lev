@@ -11,6 +11,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="Cost_Counter_Lev" target="11" />
+      <module name="Proba2" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>
