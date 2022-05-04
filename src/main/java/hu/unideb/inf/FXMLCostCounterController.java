@@ -27,7 +27,7 @@ public class FXMLCostCounterController implements Initializable {
 
     FinancialData financialData = new FinancialData();
 
-
+    JpaPersonDataDAO jpaPersonDataDAO = new JpaPersonDataDAO();
 
     @FXML
     private Button handleAverageButtonPushed;
@@ -102,13 +102,12 @@ public class FXMLCostCounterController implements Initializable {
 
     @FXML
     void handleAverageButtonPushed(ActionEvent event) {
-
         // csak teszt céljából van itt
         Alert nevAlert = new Alert(AlertType.INFORMATION);
         nevAlert.setTitle("TESZT");
         nevAlert.setHeaderText(null);
         nevAlert.setContentText("Átlag gomb működik!");
-        nevAlert.showAndWait();;
+        nevAlert.showAndWait();
     }
 
     @FXML
@@ -124,8 +123,6 @@ public class FXMLCostCounterController implements Initializable {
         }
         else {
             if (handleDateTyping.getText().isEmpty()) {
-                System.out.println("Adjon meg értéket mindkét helyre");
-
                 Alert alert = new Alert(AlertType.INFORMATION);
                 alert.setTitle("Hiányzó adat!");
                 alert.setHeaderText("Dátum megadása szükséges!");
@@ -177,24 +174,22 @@ public class FXMLCostCounterController implements Initializable {
 
     @FXML
     void handleSearchButtonPushed(ActionEvent event) {
-
         //csak teszt céljából van itt
         Alert nevAlert = new Alert(AlertType.INFORMATION);
         nevAlert.setTitle("TESZT");
         nevAlert.setHeaderText(null);
         nevAlert.setContentText("Keresés gomb működik!");
-        nevAlert.showAndWait();;
+        nevAlert.showAndWait();
     }
 
     @FXML
     void handleRegisterButtonPushed(ActionEvent event) {
             if (!handleNameTyping.getText().isEmpty() ) {
+                personData.setName(handleNameTyping.getText());
                 nameInput = handleNameTyping.getText();
-                //savePersonData(handleNameTyping.getText());// kell egy metódus ami az adatbázisba adat rögzítésért felel
+                jpaPersonDataDAO.savePersonData(personData);
         }
             else {
-                System.out.println("Adjon meg értéket mindkét helyre");
-
                 Alert nevAlert = new Alert(AlertType.INFORMATION);
                 nevAlert.setTitle("Hiányzó adat!");
                 nevAlert.setHeaderText(null);
@@ -202,8 +197,4 @@ public class FXMLCostCounterController implements Initializable {
                 nevAlert.showAndWait();
             }
     }
-
-
-
-
 }
