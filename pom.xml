@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>hu.unideb.inf</groupId>
-    <artifactId>Proba2</artifactId>
+    <artifactId>Cost_Counter_Lev</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
