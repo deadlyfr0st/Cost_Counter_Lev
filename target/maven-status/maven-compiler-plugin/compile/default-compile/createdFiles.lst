@@ -1,3 +1,7 @@
-hu\unideb\inf\FXMLStudentsSceneController.class
+hu\unideb\inf\PersonDataDAO.class
 hu\unideb\inf\MainApp.class
+hu\unideb\inf\FinancialData.class
+hu\unideb\inf\PersonData.class
 hu\unideb\inf\Main.class
+hu\unideb\inf\JpaPersonDataDAO.class
+hu\unideb\inf\FXMLCostCounterController.class
