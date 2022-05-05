@@ -102,22 +102,54 @@ public class FXMLCostCounterController implements Initializable {
 
     @FXML
     void handleAverageButtonPushed(ActionEvent event) {
-        // csak teszt céljából van itt
-        Alert nevAlert = new Alert(AlertType.INFORMATION);
-        nevAlert.setTitle("TESZT");
-        nevAlert.setHeaderText(null);
-        nevAlert.setContentText("Átlag gomb működik!");
-        nevAlert.showAndWait();
+
+        if (!handleDateFromTyping.getText().isEmpty() && CostTypeChoiceBox1.isPressed() && !handleDateToTyping.getText().isEmpty() && nameChoiceBox1.isPressed())  {
+
+
+            // olyan metódus kell ami a táblázatba  !!!
+
+
+        }
+        else {
+            if (handleDateToTyping.getText().isEmpty()) {
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("Hiányzó adat!");
+                alert.setHeaderText("Kezdő dátum megadása szükséges!");
+                alert.setContentText("Dátum megadásánál figyeljen a helyes formátumra!\n Példa: 2022.01.01");
+                alert.showAndWait();
+            }
+            if (handleDateFromTyping.getText().isEmpty()) {
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("Hiányzó adat!");
+                alert.setHeaderText("Vég dátum megadása szükséges!");
+                alert.setContentText("Dátum megadásánál figyeljen a helyes formátumra!\n Példa: 2022.01.01");
+                alert.showAndWait();
+            }
+            if (!CostTypeChoiceBox1.isPressed()) {
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("Hiányzó adat!");
+                alert.setHeaderText("Költség kategória megadása szükséges!");
+                alert.setContentText("Kérjük a lenyíló listából válaszon kategóriát!");
+                alert.showAndWait();
+            }
+            if (!nameChoiceBox1.isPressed()) {
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("Hiányzó adat!");
+                alert.setHeaderText("Név megadása szükséges!");
+                alert.setContentText("Kérjük a lenyíló listából válasza ki a megfelő nevet!");
+                alert.showAndWait();
+            }
+        }
     }
 
     @FXML
     void handleDataUpLoadButtonPushed(ActionEvent event) {
 
-        if (!handleDateTyping.getText().isEmpty() && CostTypeChoiceBox1.isPressed() && !handlePriceTyping.getText().isEmpty() && nameChoiceBox1.isPressed())  {
+        if (!handleDateTyping.getText().isEmpty() && CostTypeChoiceBox.isPressed() && !handlePriceTyping.getText().isEmpty() && nameChoiceBox.isPressed())  {
             dataInput = LocalDate.parse(handleDateTyping.getText());
             priceInput = Integer.parseInt(handlePriceTyping.getText());
-            tyepchoice = CostTypeChoiceBox1.getValue();
-            namechoice = nameChoiceBox1.getValue();
+            tyepchoice = CostTypeChoiceBox.getValue();
+            namechoice = nameChoiceBox.getValue();
 
             // olyan metódus kell ami a táblázatba rögzíti a kapott értékeket !!!
         }
