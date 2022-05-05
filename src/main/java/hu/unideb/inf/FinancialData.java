@@ -1,10 +1,12 @@
 package hu.unideb.inf;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import java.time.LocalDate;
 
+@Entity
 public class FinancialData {
 
     @Id

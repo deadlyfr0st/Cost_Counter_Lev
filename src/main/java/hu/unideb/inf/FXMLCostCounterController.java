@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.net.URL;
@@ -57,8 +58,6 @@ public class FXMLCostCounterController implements Initializable {
     }
 
 
-
-
     //végleges adatokra kell cserélni ez csak a teszthez van
     private String[] costType = {"étel", "szórakozás", "utazás"};
     private String[] names = {"Piri", "Mari", "Béla"}; //
@@ -67,7 +66,6 @@ public class FXMLCostCounterController implements Initializable {
     private int priceInput;
     private String tyepchoice;
     private String namechoice;
-
 
 
     // választható opciók (lenyíló fülek)
@@ -98,45 +96,43 @@ public class FXMLCostCounterController implements Initializable {
     private TableColumn<FinancialData, Integer> PriceColumn;
     @FXML
     private TableColumn<FinancialData, String> TypeColumn;
+
+    Alert alert = new Alert(AlertType.INFORMATION);
+
     // Gombok vezérlése
 
     @FXML
     void handleAverageButtonPushed(ActionEvent event) {
-
-        if (!handleDateFromTyping.getText().isEmpty() && CostTypeChoiceBox1.isPressed() && !handleDateToTyping.getText().isEmpty() && nameChoiceBox1.isPressed())  {
+        if (!handleDateFromTyping.getText().isEmpty() && !CostTypeChoiceBox1.getSelectionModel().isEmpty()
+                && !handleDateToTyping.getText().isEmpty() && !nameChoiceBox1.getSelectionModel().isEmpty()) {
 
 
             // olyan metódus kell ami a táblázatba  !!!
 
 
-        }
-        else {
-            if (handleDateToTyping.getText().isEmpty()) {
-                Alert alert = new Alert(AlertType.INFORMATION);
+        } else {
+            if (nameChoiceBox1.getSelectionModel().isEmpty()) {
                 alert.setTitle("Hiányzó adat!");
-                alert.setHeaderText("Kezdő dátum megadása szükséges!");
-                alert.setContentText("Dátum megadásánál figyeljen a helyes formátumra!\n Példa: 2022.01.01");
+                alert.setHeaderText("Név megadása szükséges!");
+                alert.setContentText("Kérjük a lenyíló listából válasza ki a megfelő nevet!");
                 alert.showAndWait();
             }
-            if (handleDateFromTyping.getText().isEmpty()) {
-                Alert alert = new Alert(AlertType.INFORMATION);
-                alert.setTitle("Hiányzó adat!");
-                alert.setHeaderText("Vég dátum megadása szükséges!");
-                alert.setContentText("Dátum megadásánál figyeljen a helyes formátumra!\n Példa: 2022.01.01");
-                alert.showAndWait();
-            }
-            if (!CostTypeChoiceBox1.isPressed()) {
-                Alert alert = new Alert(AlertType.INFORMATION);
+            if (CostTypeChoiceBox1.getSelectionModel().isEmpty()) {
                 alert.setTitle("Hiányzó adat!");
                 alert.setHeaderText("Költség kategória megadása szükséges!");
                 alert.setContentText("Kérjük a lenyíló listából válaszon kategóriát!");
                 alert.showAndWait();
             }
-            if (!nameChoiceBox1.isPressed()) {
-                Alert alert = new Alert(AlertType.INFORMATION);
+            if (handleDateFromTyping.getText().isEmpty()) {
                 alert.setTitle("Hiányzó adat!");
-                alert.setHeaderText("Név megadása szükséges!");
-                alert.setContentText("Kérjük a lenyíló listából válasza ki a megfelő nevet!");
+                alert.setHeaderText("Kezdő dátum megadása szükséges!");
+                alert.setContentText("Dátum megadásánál figyeljen a helyes formátumra!\n Példa: 2022.01.01");
+                alert.showAndWait();
+            }
+            if (handleDateToTyping.getText().isEmpty()) {
+                alert.setTitle("Hiányzó adat!");
+                alert.setHeaderText("Befejező dátum megadása szükséges!");
+                alert.setContentText("Dátum megadásánál figyeljen a helyes formátumra!\n Példa: 2022.01.01");
                 alert.showAndWait();
             }
         }
@@ -144,42 +140,37 @@ public class FXMLCostCounterController implements Initializable {
 
     @FXML
     void handleDataUpLoadButtonPushed(ActionEvent event) {
-
-        if (!handleDateTyping.getText().isEmpty() && CostTypeChoiceBox.isPressed() && !handlePriceTyping.getText().isEmpty() && nameChoiceBox.isPressed())  {
+        if (!handleDateTyping.getText().isEmpty() && !CostTypeChoiceBox.getSelectionModel().isEmpty()
+                && !handlePriceTyping.getText().isEmpty() && !nameChoiceBox.getSelectionModel().isEmpty()) {
             dataInput = LocalDate.parse(handleDateTyping.getText());
             priceInput = Integer.parseInt(handlePriceTyping.getText());
             tyepchoice = CostTypeChoiceBox.getValue();
             namechoice = nameChoiceBox.getValue();
 
             // olyan metódus kell ami a táblázatba rögzíti a kapott értékeket !!!
-        }
-        else {
+        } else {
+            if (nameChoiceBox1.getSelectionModel().isEmpty()) {
+                alert.setTitle("Hiányzó adat!");
+                alert.setHeaderText("Név megadása szükséges!");
+                alert.setContentText("Kérjük a lenyíló listából válasza ki a megfelő nevet!");
+                alert.showAndWait();
+            }
+            if (CostTypeChoiceBox1.getSelectionModel().isEmpty()) {
+                alert.setTitle("Hiányzó adat!");
+                alert.setHeaderText("Költség kategória megadása szükséges!");
+                alert.setContentText("Kérjük a lenyíló listából válaszon kategóriát!");
+                alert.showAndWait();
+            }
             if (handleDateTyping.getText().isEmpty()) {
-                Alert alert = new Alert(AlertType.INFORMATION);
                 alert.setTitle("Hiányzó adat!");
                 alert.setHeaderText("Dátum megadása szükséges!");
                 alert.setContentText("Dátum megadásánál figyeljen a helyes formátumra!\n Példa: 2022.01.01");
                 alert.showAndWait();
             }
             if (handlePriceTyping.getText().isEmpty()) {
-                Alert alert = new Alert(AlertType.INFORMATION);
                 alert.setTitle("Hiányzó adat!");
                 alert.setHeaderText("Összeg megadása szükséges!");
                 alert.setContentText("Összeg megadásánál figyeljen a helyes formátumra!\n Példa: 12500");
-                alert.showAndWait();
-            }
-            if (!CostTypeChoiceBox1.isPressed()) {
-                Alert alert = new Alert(AlertType.INFORMATION);
-                alert.setTitle("Hiányzó adat!");
-                alert.setHeaderText("Költség kategória megadása szükséges!");
-                alert.setContentText("Kérjük a lenyíló listából válaszon kategóriát!");
-                alert.showAndWait();
-            }
-            if (!nameChoiceBox1.isPressed()) {
-                Alert alert = new Alert(AlertType.INFORMATION);
-                alert.setTitle("Hiányzó adat!");
-                alert.setHeaderText("Név megadása szükséges!");
-                alert.setContentText("Kérjük a lenyíló listából válasza ki a megfelő nevet!");
                 alert.showAndWait();
             }
         }
@@ -206,27 +197,55 @@ public class FXMLCostCounterController implements Initializable {
 
     @FXML
     void handleSearchButtonPushed(ActionEvent event) {
-        //csak teszt céljából van itt
-        Alert nevAlert = new Alert(AlertType.INFORMATION);
-        nevAlert.setTitle("TESZT");
-        nevAlert.setHeaderText(null);
-        nevAlert.setContentText("Keresés gomb működik!");
-        nevAlert.showAndWait();
+        if (!handleDateFromTyping.getText().isEmpty() && !CostTypeChoiceBox1.getSelectionModel().isEmpty()
+                && !handleDateToTyping.getText().isEmpty() && !nameChoiceBox1.getSelectionModel().isEmpty()) {
+            //NameColumn.setText(jpaPersonDataDAO.);
+            System.out.println("műxik");
+
+
+            // olyan metódus kell ami a táblázatba  !!!
+
+
+        } else {
+            if (nameChoiceBox1.getSelectionModel().isEmpty()) {
+                alert.setTitle("Hiányzó adat!");
+                alert.setHeaderText("Név megadása szükséges!");
+                alert.setContentText("Kérjük a lenyíló listából válasza ki a megfelő nevet!");
+                alert.showAndWait();
+            }
+            if (CostTypeChoiceBox1.getSelectionModel().isEmpty()) {
+                alert.setTitle("Hiányzó adat!");
+                alert.setHeaderText("Költség kategória megadása szükséges!");
+                alert.setContentText("Kérjük a lenyíló listából válaszon kategóriát!");
+                alert.showAndWait();
+            }
+            if (handleDateFromTyping.getText().isEmpty()) {
+                alert.setTitle("Hiányzó adat!");
+                alert.setHeaderText("Kezdő dátum megadása szükséges!");
+                alert.setContentText("Dátum megadásánál figyeljen a helyes formátumra!\n Példa: 2022.01.01");
+                alert.showAndWait();
+            }
+            if (handleDateToTyping.getText().isEmpty()) {
+                alert.setTitle("Hiányzó adat!");
+                alert.setHeaderText("Befejező dátum megadása szükséges!");
+                alert.setContentText("Dátum megadásánál figyeljen a helyes formátumra!\n Példa: 2022.01.01");
+                alert.showAndWait();
+            }
+        }
     }
 
     @FXML
     void handleRegisterButtonPushed(ActionEvent event) {
-            if (!handleNameTyping.getText().isEmpty() ) {
-                personData.setName(handleNameTyping.getText());
-                nameInput = handleNameTyping.getText();
-                jpaPersonDataDAO.savePersonData(personData);
+        if (!handleNameTyping.getText().isEmpty()) {
+            personData.setName(handleNameTyping.getText());
+            nameInput = handleNameTyping.getText();
+            jpaPersonDataDAO.savePersonData(personData);
+        } else {
+            Alert nevAlert = new Alert(AlertType.INFORMATION);
+            nevAlert.setTitle("Hiányzó adat!");
+            nevAlert.setHeaderText(null);
+            nevAlert.setContentText("Név megadása szükséges!");
+            nevAlert.showAndWait();
         }
-            else {
-                Alert nevAlert = new Alert(AlertType.INFORMATION);
-                nevAlert.setTitle("Hiányzó adat!");
-                nevAlert.setHeaderText(null);
-                nevAlert.setContentText("Név megadása szükséges!");
-                nevAlert.showAndWait();
-            }
     }
 }
