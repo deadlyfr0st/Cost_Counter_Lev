@@ -1,9 +1,6 @@
 package hu.unideb.inf;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
@@ -13,13 +10,22 @@ public class FinancialData {
     @GeneratedValue
     private Integer financialID;
 
+
     private int food = 0;
     private int travel = 0;
     private int entertainment = 0;
 
+
+    @Enumerated(EnumType.STRING)
+    private typeOfCost2 costType;
+
+    public enum typeOfCost2{
+        TRAVEL,FOOD,ENTERTAINMENT
+    }
+
     //int[0] = FOOD, int[1] = TRAVEL, int[2] = ENTERTAINMENT
-    @OneToOne
-    int[] typeOfCost = new int[]{food, travel, entertainment};
+
+   // int[] typeOfCost = new int[]{food, travel, entertainment};
 
     private int cost;
     private LocalDate dateOfPurchase;
@@ -32,6 +38,8 @@ public class FinancialData {
         this.dateOfPurchase = dateOfPurchase;
     }
 
+/*
+
     public int[] getTypeOfCost() {
         return typeOfCost;
     }
@@ -39,6 +47,8 @@ public class FinancialData {
     public void setTypeOfCost(int[] typeOfCost) {
         this.typeOfCost = typeOfCost;
     }
+*/
+
 
     public LocalDate getDateOfPurchase() {
         return dateOfPurchase;

@@ -2,6 +2,8 @@ package hu.unideb.inf;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import java.util.List;
 
 @Entity
 public class PersonData {
@@ -11,6 +13,8 @@ public class PersonData {
     private Integer id;
 
     private String name;
+    @OneToMany
+    private List<FinancialData> koltsegek;
 
     public PersonData() {
     }
