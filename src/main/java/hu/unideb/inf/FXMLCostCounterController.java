@@ -51,8 +51,10 @@ public class FXMLCostCounterController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        CostTypeChoiceBox.getItems().addAll(Arrays.toString(financialData.getTypeOfCost()));
-        CostTypeChoiceBox1.getItems().addAll(Arrays.toString(financialData.getTypeOfCost()));
+       // CostTypeChoiceBox.getItems().addAll(Arrays.toString(financialData.getTypeOfCost()));
+        CostTypeChoiceBox.getItems().addAll(costType);
+       // CostTypeChoiceBox1.getItems().addAll(Arrays.toString(financialData.getTypeOfCost()));
+        CostTypeChoiceBox1.getItems().addAll(costType);
         nameChoiceBox.getItems().addAll(personData.getName());
         nameChoiceBox1.getItems().addAll(personData.getName());
     }
@@ -235,10 +237,11 @@ public class FXMLCostCounterController implements Initializable {
     }
 
     @FXML
-    void handleRegisterButtonPushed(ActionEvent event) {
+    void handleRegisterButtonPushed(ActionEvent event) throws Exception {
         if (!handleNameTyping.getText().isEmpty()) {
-            personData.setName(handleNameTyping.getText());
             nameInput = handleNameTyping.getText();
+            personData = new PersonData();
+            personData.setName(nameInput);
             jpaPersonDataDAO.savePersonData(personData);
         } else {
             Alert nevAlert = new Alert(AlertType.INFORMATION);

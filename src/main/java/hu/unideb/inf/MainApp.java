@@ -13,10 +13,9 @@ public class MainApp extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-        /*startDatabase();*/
         startDatabase();
 
-        PersonDataDAO aDAO= new JpaPersonDataDAO();
+       /* PersonDataDAO aDAO= new JpaPersonDataDAO();
         PersonData a = new PersonData();
         a.setName("hoyomany");
         //a.setIncome(211222);
@@ -24,7 +23,7 @@ public class MainApp extends Application {
         aDAO.close();
 
         FinancialData fd = new FinancialData(200, LocalDate.of(2022,04,26));
-
+*/
         FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("/fxml/FXMLCostCounterScene.fxml"));
         Scene scene = new Scene(loader.load());
         stage.setTitle("Cost Counter");
