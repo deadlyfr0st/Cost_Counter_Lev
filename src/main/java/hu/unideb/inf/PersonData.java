@@ -1,8 +1,6 @@
 package hu.unideb.inf;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -11,10 +9,23 @@ public class PersonData {
     @Id
     @GeneratedValue
     private Integer id;
-
     private String name;
-    @OneToMany
-    private List<FinancialData> koltsegek;
+    @OneToMany()
+    @JoinColumn(name = "owner_personData")
+
+    private List<FinancialData> financialDataList = new ArrayList<>();
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public List<FinancialData> getFinancialDataList() {
+        return financialDataList;
+    }
+
+    public void setFinancialDataList(List<FinancialData> financialDataList) {
+        this.financialDataList = financialDataList;
+    }
 
     public PersonData() {
     }
