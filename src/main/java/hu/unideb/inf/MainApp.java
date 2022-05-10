@@ -1,5 +1,6 @@
 package hu.unideb.inf;
 
+import com.sun.xml.bind.v2.runtime.Name;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -20,12 +21,14 @@ public class MainApp extends Application {
     public void start(Stage stage) throws Exception {
 
         startDatabase();
+        List<String> nameList = new ArrayList<>();
+
         FinancialDataDAO aDAOF = new JpaFinancialDataDAO();
         PersonDataDAO aDAOP = new JpaPersonDataDAO();
 
 
 //////////////////////// koltseg keszites /////////////////////////////
-
+/*
         FinancialData fd = new FinancialData();
         fd.setCost(22322);
         fd.setCostType(FinancialData.typeOfCost.ENTERTAINMENT);
@@ -37,11 +40,11 @@ public class MainApp extends Application {
         fd2.setCost(22322);
         fd2.setCostType(TRAVEL);
         fd2.setDateOfPurchase(LocalDate.of(1882,12,13));
-        aDAOF.saveFinancialData(fd2);
+        aDAOF.saveFinancialData(fd2);*/
 
 //////////////////////////Person keszites/////////////////////////
 
-/*        PersonData person = new PersonData();
+     /*  PersonData person = new PersonData();
         person.setName("proba1");
 
         person.getFinancialDataList().add(fd);
@@ -53,28 +56,32 @@ public class MainApp extends Application {
             System.out.println(financialData.getCost());
             System.out.println(financialData.getCostType());
 
-        }*/
-
-
-        FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("/fxml/FXMLCostCounterScene.fxml"));
+        }
+       person.getFinancialDataList();
+*/
+      /*  FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("/fxml/FXMLCostCounterScene.fxml"));
         Scene scene = new Scene(loader.load());
         stage.setTitle("Cost Counter");
         stage.setScene(scene);
-        stage.show();
+        stage.show();*/
 
         Connection conn = DriverManager.getConnection("jdbc:h2:~/Prod_db", "sa", "");
 
         ////////////////// DB lekerdezes hogy megkapjuk az embert////////////////
-        List<Integer> idls = new ArrayList<>();
-        String query = "SELECT * FROM PERSONDATA WHERE NAME= 'proba1'";
+
+
+        String query = "SELECT NAME FROM PERSONDATA WHERE  NAME is not null ";
         try (Statement stmt = conn.createStatement()) {
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
-                int financialID = rs.getInt("ID");
-                System.out.println(financialID);
-                idls.add(financialID);
+                nameList.add(rs.getString("Name"));
             }
         }
+
+        for (String str: nameList) {
+            System.out.println(str);
+        }
+
 ///////////////////////////////DB lekerdezes hogy megkapjuk a koltseget//////////////////////////////
 
      /*   for (Integer owner_iddd: idls) {

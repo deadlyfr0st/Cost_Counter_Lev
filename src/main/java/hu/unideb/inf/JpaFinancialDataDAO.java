@@ -19,8 +19,7 @@ public class JpaFinancialDataDAO implements  FinancialDataDAO{
 
     @Override
     public List<FinancialData> getFinancialDataDAO() {
-        TypedQuery<FinancialData> query= entityManager.createQuery(
-                "SELECT a FROM FinancialData a  ", FinancialData.class);
+        TypedQuery<FinancialData> query= entityManager.createQuery("SELECT a FROM FinancialData a  ", FinancialData.class);
         return query.getResultList();
     }
 

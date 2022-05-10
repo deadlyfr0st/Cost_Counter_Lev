@@ -8,5 +8,6 @@ public interface PersonDataDAO extends AutoCloseable{
     public List<PersonData> getPersonData(); //read
     public void updatePersonData(PersonData a); //update
     public void deletePersonData(PersonData a); //delete
+    public void searchPersonData(PersonData a); //search
 
 }
