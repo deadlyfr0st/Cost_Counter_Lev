@@ -17,6 +17,7 @@ public class JpaPersonDataDAO implements PersonDataDAO {
         entityManager.getTransaction().commit();
     }
 
+
     @Override
     public List<PersonData> getPersonData() {
         TypedQuery<PersonData> query= entityManager.createQuery(
@@ -37,6 +38,12 @@ public class JpaPersonDataDAO implements PersonDataDAO {
         entityManager.getTransaction().begin();
         entityManager.remove(a);
         entityManager.getTransaction().commit();
+    }
+
+    @Override
+    public void searchPersonData(PersonData a) {
+
+
     }
 
     @Override

@@ -51,12 +51,21 @@ public class FXMLCostCounterController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         // CostTypeChoiceBox.getItems().addAll(Arrays.toString(financialData.getTypeOfCost()));
         CostTypeChoiceBox.getItems().addAll(costType);
         // CostTypeChoiceBox1.getItems().addAll(Arrays.toString(financialData.getTypeOfCost()));
         CostTypeChoiceBox1.getItems().addAll(costType);
         nameChoiceBox.getItems().addAll(personData.getName());
         nameChoiceBox1.getItems().addAll(personData.getName());
+
+        /*
+        NameColumn.setCellFactory(new PropertyValueFactory<PersonData, String>(name));
+        TypeColumn.setCellFactory(new PropertyValueFactory<FinancialData, String>(type));
+        PriceColumn.setCellFactory(new PropertyValueFactory<FinancialData, Integer>(price));
+        DateFromColumn.setCellFactory(new PropertyValueFactory<FinancialData, LocalDate>(dateFrom));
+        DateToColumn.setCellFactory(new PropertyValueFactory<FinancialData, LocalDate>(dateFrom));
+*/
     }
 
 
