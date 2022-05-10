@@ -6,42 +6,50 @@ import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
-public class JpaPersonDataDAO implements PersonDataDAO {
+public class JpaFinancialDataDAO implements  FinancialDataDAO{
     private final EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("br.com.fredericci.pu");
     private final EntityManager entityManager = entityManagerFactory.createEntityManager();
 
     @Override
-    public void savePersonData(PersonData a) {
+    public void saveFinancialData(FinancialData a) {
         entityManager.getTransaction().begin();
         entityManager.persist(a);
         entityManager.getTransaction().commit();
     }
 
     @Override
-    public List<PersonData> getPersonData() {
-        TypedQuery<PersonData> query= entityManager.createQuery(
-                "SELECT a FROM PersonData a", PersonData.class);
-        List<PersonData> customers = query.getResultList();
-        return customers;
+    public List<FinancialData> getFinancialDataDAO() {
+        TypedQuery<FinancialData> query= entityManager.createQuery(
+                "SELECT a FROM FinancialData a  ", FinancialData.class);
+        return query.getResultList();
     }
 
     @Override
-    public void updatePersonData(PersonData a) {
+    public void updateFinancialDataDAO(FinancialData a) {
         entityManager.getTransaction().begin();
         entityManager.persist(a);
         entityManager.getTransaction().commit();
     }
 
     @Override
-    public void deletePersonData(PersonData a) {
+    public void deleteFinancialData(FinancialData a) {
         entityManager.getTransaction().begin();
         entityManager.remove(a);
         entityManager.getTransaction().commit();
     }
 
     @Override
+    public void savePersonData(PersonData personData) {
+        entityManager.getTransaction().begin();
+        entityManager.persist(personData);
+        entityManager.getTransaction().commit();
+    }
+
+
+    @Override
     public void close() throws Exception {
         entityManager.close();
         entityManagerFactory.close();
+
     }
 }
