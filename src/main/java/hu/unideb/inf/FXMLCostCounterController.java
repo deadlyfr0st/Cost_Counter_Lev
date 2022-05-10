@@ -51,9 +51,9 @@ public class FXMLCostCounterController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-       // CostTypeChoiceBox.getItems().addAll(Arrays.toString(financialData.getTypeOfCost()));
+        // CostTypeChoiceBox.getItems().addAll(Arrays.toString(financialData.getTypeOfCost()));
         CostTypeChoiceBox.getItems().addAll(costType);
-       // CostTypeChoiceBox1.getItems().addAll(Arrays.toString(financialData.getTypeOfCost()));
+        // CostTypeChoiceBox1.getItems().addAll(Arrays.toString(financialData.getTypeOfCost()));
         CostTypeChoiceBox1.getItems().addAll(costType);
         nameChoiceBox.getItems().addAll(personData.getName());
         nameChoiceBox1.getItems().addAll(personData.getName());
@@ -102,6 +102,22 @@ public class FXMLCostCounterController implements Initializable {
     Alert alert = new Alert(AlertType.INFORMATION);
 
     // Gombok vezérlése
+
+    @FXML
+    void handleRegisterButtonPushed(ActionEvent event) throws Exception {
+        if (!handleNameTyping.getText().isEmpty()) {
+            nameInput = handleNameTyping.getText();
+            personData = new PersonData();
+            personData.setName(nameInput);
+            jpaPersonDataDAO.savePersonData(personData);
+        } else {
+            Alert nevAlert = new Alert(AlertType.INFORMATION);
+            nevAlert.setTitle("Hiányzó adat!");
+            nevAlert.setHeaderText(null);
+            nevAlert.setContentText("Név megadása szükséges!");
+            nevAlert.showAndWait();
+        }
+    }
 
     @FXML
     void handleAverageButtonPushed(ActionEvent event) {
@@ -233,22 +249,6 @@ public class FXMLCostCounterController implements Initializable {
                 alert.setContentText("Dátum megadásánál figyeljen a helyes formátumra!\n Példa: 2022.01.01");
                 alert.showAndWait();
             }
-        }
-    }
-
-    @FXML
-    void handleRegisterButtonPushed(ActionEvent event) throws Exception {
-        if (!handleNameTyping.getText().isEmpty()) {
-            nameInput = handleNameTyping.getText();
-            personData = new PersonData();
-            personData.setName(nameInput);
-            jpaPersonDataDAO.savePersonData(personData);
-        } else {
-            Alert nevAlert = new Alert(AlertType.INFORMATION);
-            nevAlert.setTitle("Hiányzó adat!");
-            nevAlert.setHeaderText(null);
-            nevAlert.setContentText("Név megadása szükséges!");
-            nevAlert.showAndWait();
         }
     }
 }

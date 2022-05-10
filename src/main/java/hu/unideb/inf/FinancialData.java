@@ -16,6 +16,7 @@ public class FinancialData {
     }
     private int cost;
     private LocalDate dateOfPurchase;
+
     //////////////////////Setters Getters////////////////////////
     public FinancialData() {
     }

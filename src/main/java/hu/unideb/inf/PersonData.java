@@ -12,7 +12,6 @@ public class PersonData {
     private String name;
     @OneToMany()
     @JoinColumn(name = "owner_personData")
-
     private List<FinancialData> financialDataList = new ArrayList<>();
 
     public void setId(Integer id) {

@@ -30,7 +30,6 @@ public class JpaPersonDataDAO implements PersonDataDAO {
         entityManager.getTransaction().begin();
         entityManager.persist(a);
         entityManager.getTransaction().commit();
-
     }
 
     @Override
@@ -38,7 +37,6 @@ public class JpaPersonDataDAO implements PersonDataDAO {
         entityManager.getTransaction().begin();
         entityManager.remove(a);
         entityManager.getTransaction().commit();
-
     }
 
     @Override
