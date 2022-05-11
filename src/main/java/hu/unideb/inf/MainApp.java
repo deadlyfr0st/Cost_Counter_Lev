@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
+import static hu.unideb.inf.FinancialData.typeOfCost.ENTERTAINMENT;
 import static hu.unideb.inf.FinancialData.typeOfCost.TRAVEL;
 
 
@@ -25,6 +26,18 @@ public class MainApp extends Application {
 
         FinancialDataDAO aDAOF = new JpaFinancialDataDAO();
         PersonDataDAO aDAOP = new JpaPersonDataDAO();
+
+
+        for (PersonData personData : aDAOP.getAllPersonData()) {
+
+            System.out.println(personData.getName());
+
+            for (FinancialData financialData: personData.getFinancialDataList()) {
+                System.out.println(financialData.getCostType());
+                System.out.println(financialData.getCost());
+
+            }
+        }
 
 
 //////////////////////// koltseg keszites /////////////////////////////
@@ -58,29 +71,28 @@ public class MainApp extends Application {
 
         }
        person.getFinancialDataList();
-*/
-      /*  FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("/fxml/FXMLCostCounterScene.fxml"));
+*//*
+        FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("/fxml/FXMLCostCounterScene.fxml"));
         Scene scene = new Scene(loader.load());
         stage.setTitle("Cost Counter");
         stage.setScene(scene);
-        stage.show();*/
-
+        stage.show();
+*/
         Connection conn = DriverManager.getConnection("jdbc:h2:~/Prod_db", "sa", "");
 
         ////////////////// DB lekerdezes hogy megkapjuk az embert////////////////
+/*
 
-
-        String query = "SELECT NAME FROM PERSONDATA WHERE  NAME is not null ";
+        String query = "SELECT NAME FROM PERSONDATA  ";
         try (Statement stmt = conn.createStatement()) {
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
                 nameList.add(rs.getString("Name"));
             }
         }
-
-        for (String str: nameList) {
+        for (String str : nameList) {
             System.out.println(str);
-        }
+        }*/
 
 ///////////////////////////////DB lekerdezes hogy megkapjuk a koltseget//////////////////////////////
 
@@ -92,7 +104,6 @@ public class MainApp extends Application {
                 System.out.println(rs.next());
             }
         }*/
-
 
 
     }
