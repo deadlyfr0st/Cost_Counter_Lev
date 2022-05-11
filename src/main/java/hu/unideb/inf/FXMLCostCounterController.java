@@ -27,7 +27,6 @@ public class FXMLCostCounterController implements Initializable {
     PersonData personData = new PersonData();
 
     FinancialData financialData = new FinancialData();
-
     JpaPersonDataDAO jpaPersonDataDAO = new JpaPersonDataDAO();
 
     @FXML

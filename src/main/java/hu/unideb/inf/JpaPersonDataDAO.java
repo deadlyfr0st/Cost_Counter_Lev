@@ -22,8 +22,17 @@ public class JpaPersonDataDAO implements PersonDataDAO {
     public List<PersonData> getPersonData() {
         TypedQuery<PersonData> query= entityManager.createQuery(
                 "SELECT a FROM PersonData a", PersonData.class);
-        List<PersonData> customers = query.getResultList();
-        return customers;
+        List<PersonData> personDataList = query.getResultList();
+        return personDataList;
+    }
+
+    @Override
+    public List<PersonData> getAllPersonData() {
+        TypedQuery<PersonData> query= entityManager.createQuery(
+                "SELECT a FROM PersonData a", PersonData.class);
+        List<PersonData> getAllPersonDataList = query.getResultList();
+        return getAllPersonDataList;
+
     }
 
     @Override
@@ -41,8 +50,14 @@ public class JpaPersonDataDAO implements PersonDataDAO {
     }
 
     @Override
+    //// adja vissza a persondata, minden attributumma oszt lehet vele tovabb
+
     public void searchPersonData(PersonData a) {
 
+       /* public String {
+            TypedQuery<PersonData> query= entityManager.createQuery(
+                    "SELECT a FROM PersonData a WHERE name= a;
+            return PersonData;*/
 
     }
 

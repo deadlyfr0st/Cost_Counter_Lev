@@ -44,9 +44,6 @@ public class FinancialData {
         this.cost = cost;
     }
 
-
-
-
     public FinancialData(int cost, LocalDate dateOfPurchase) {
         this.cost = cost;
         this.dateOfPurchase = dateOfPurchase;
