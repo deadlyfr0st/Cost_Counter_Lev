@@ -4,6 +4,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
+import java.util.ArrayList;
 import java.util.List;
 
 public class JpaPersonDataDAO implements PersonDataDAO {
@@ -27,12 +28,15 @@ public class JpaPersonDataDAO implements PersonDataDAO {
     }
 
     @Override
-    public List<PersonData> getAllPersonData() {
+    public List<String> getAllPersonName() {
+        List<String> personNames = new ArrayList<>();
         TypedQuery<PersonData> query= entityManager.createQuery(
                 "SELECT a FROM PersonData a", PersonData.class);
         List<PersonData> getAllPersonDataList = query.getResultList();
-        return getAllPersonDataList;
-
+        for (PersonData personName : getAllPersonDataList) {
+            personNames.add(personName.getName());
+        }
+        return personNames;
     }
 
     @Override

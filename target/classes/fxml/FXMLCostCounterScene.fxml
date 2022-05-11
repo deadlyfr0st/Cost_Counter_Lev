@@ -43,8 +43,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="hu.unideb.inf.FXMLCostCounterController">
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hu.unideb.inf.FXMLCostCounterController">
    <children>
       <TabPane prefHeight="376.0" prefWidth="640.0" tabClosingPolicy="UNAVAILABLE">
          <tabs>
@@ -54,7 +53,7 @@
                      <children>
                         <HBox prefHeight="90.0" prefWidth="629.0" spacing="10.0">
                            <children>
-                              <TextField fx:id="handleNameTyping" alignment="CENTER" prefHeight="25.0" prefWidth="137.0" text="új felhasználó">
+                              <TextField fx:id="handleNameTyping" alignment="CENTER" prefHeight="25.0" prefWidth="137.0" promptText="Név">
                                  <opaqueInsets>
                                     <Insets />
                                  </opaqueInsets>
@@ -91,8 +90,8 @@
                            <children>
                               <ChoiceBox fx:id="nameChoiceBox" prefWidth="150.0" />
                               <ChoiceBox fx:id="CostTypeChoiceBox" prefWidth="150.0" />
-                              <TextField fx:id="handleDateTyping" text="dátum" />
-                              <TextField fx:id="handlePriceTyping" text="összeg" />
+                              <TextField fx:id="handleDateTyping" promptText="Dátum" />
+                              <TextField fx:id="handlePriceTyping" promptText="Összeg" />
                            </children>
                            <VBox.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="20.0" />
@@ -122,8 +121,8 @@
                            <children>
                               <ChoiceBox fx:id="nameChoiceBox1" prefWidth="150.0" />
                               <ChoiceBox fx:id="CostTypeChoiceBox1" prefWidth="150.0" />
-                              <TextField fx:id="handleDateFromTyping" text="dátum-tól" />
-                              <TextField fx:id="handleDateToTyping" prefHeight="25.0" prefWidth="137.0" text="dátum-ig">
+                              <TextField fx:id="handleDateFromTyping" promptText="Dátum-tól" />
+                              <TextField fx:id="handleDateToTyping" prefHeight="25.0" prefWidth="137.0" promptText="Dátum-ig">
                                  <opaqueInsets>
                                     <Insets />
                                  </opaqueInsets>
