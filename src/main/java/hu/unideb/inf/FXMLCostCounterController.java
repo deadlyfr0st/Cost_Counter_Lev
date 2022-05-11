@@ -10,6 +10,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.util.StringConverter;
 
 import java.net.URL;
 import java.util.*;
@@ -50,8 +51,19 @@ public class FXMLCostCounterController implements Initializable {
         CostTypeChoiceBox.getItems().addAll(costType);
         // CostTypeChoiceBox1.getItems().addAll(Arrays.toString(financialData.getTypeOfCost()));
         CostTypeChoiceBox1.getItems().addAll(costType);
-        nameChoiceBox.getItems().addAll(jpaPersonDataDAO.getAllPersonName());
-        nameChoiceBox1.getItems().addAll(jpaPersonDataDAO.getAllPersonName());
+        nameChoiceBox.getItems().addAll(jpaPersonDataDAO.getPersonData());
+        nameChoiceBox1.getItems().addAll(jpaPersonDataDAO.getPersonData());
+        nameChoiceBox.setConverter(new StringConverter<PersonData>() {
+            @Override
+            public String toString(PersonData personData) {
+                return personData.getName();
+            }
+
+            @Override
+            public PersonData fromString(String s) {
+                return jpaPersonDataDAO.getPersonData().stream().filter(personData -> s.equals(personData.getName())).findAny().orElse(null);
+            }
+        });
 
         /*
         NameColumn.setCellFactory(new PropertyValueFactory<PersonData, String>(name));
@@ -82,10 +94,10 @@ public class FXMLCostCounterController implements Initializable {
     private ChoiceBox<String> CostTypeChoiceBox1;  //költség típus lenyíló menü a keresés fülön
 
     @FXML
-    private ChoiceBox<String> nameChoiceBox; // név lenyíló menü a költség felvétel fülön
+    private ChoiceBox<PersonData> nameChoiceBox; // név lenyíló menü a költség felvétel fülön
 
     @FXML
-    private ChoiceBox<String> nameChoiceBox1; // név lenyíló menü a keresés fülön
+    private ChoiceBox<PersonData> nameChoiceBox1; // név lenyíló menü a keresés fülön
 
     // A táblázatok vezérlése
 
@@ -110,7 +122,7 @@ public class FXMLCostCounterController implements Initializable {
     void handleRegisterButtonPushed(ActionEvent event) throws Exception {
         if (!handleNameTyping.getText().isEmpty()) {
             nameInput = handleNameTyping.getText();
-            if (!jpaPersonDataDAO.getAllPersonName().contains(nameInput)){
+            if (!jpaPersonDataDAO.getAllPersonName().contains(nameInput)) {
                 personData = new PersonData();
                 personData.setName(nameInput);
                 jpaPersonDataDAO.savePersonData(personData);
@@ -136,22 +148,28 @@ public class FXMLCostCounterController implements Initializable {
     void handleDataUpLoadButtonPushed(ActionEvent event) throws Exception {
         if (!handleDateTyping.getText().isEmpty() && !CostTypeChoiceBox.getSelectionModel().isEmpty()
                 && !handlePriceTyping.getText().isEmpty() && !nameChoiceBox.getSelectionModel().isEmpty()) {
+
             dateInput = LocalDate.parse(handleDateTyping.getText());
             priceInput = Integer.parseInt(handlePriceTyping.getText());
+
             tyepchoice = CostTypeChoiceBox.getValue();
-            namechoice = nameChoiceBox.getValue();
+
 
             /////Meg kell keresni azt a persont akit kiválasztottunk a listából,
             // és annak a financialdatalist-jét kell beállítani
 
-            personData.setName(namechoice);
             financialData = new FinancialData();
+
             financialData.setCost(priceInput);
             financialData.setCostType(FinancialData.typeOfCost.valueOf(tyepchoice));
             jpaFinancialDataDAO.saveFinancialData(financialData);
-            //personData.setName(namechoice);
-            personData.getFinancialDataList().add(financialData);
+
+            this.personData = nameChoiceBox.getValue();
+            this.personData.getFinancialDataList().add(financialData);
+
             jpaPersonDataDAO.savePersonData(personData);
+            nameChoiceBox.getValue().getFinancialDataList().add(financialData);
+
             //financialData.setDateOfPurchase(LocalDate.parse());
 
             // olyan metódus kell ami a táblázatba rögzíti a kapott értékeket !!!
