@@ -56,7 +56,4 @@ public class FinancialData {
     public void setDateOfPurchase(LocalDate dateOfPurchase) {
         this.dateOfPurchase = dateOfPurchase;
     }
-
-
-
 }
