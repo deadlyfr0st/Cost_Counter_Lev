@@ -11,13 +11,70 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.util.StringConverter;
-
+import javafx.scene.control.DatePicker;
+import java.util.Locale;
+import javafx.application.Application;
+import javafx.geometry.HPos;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import java.net.URL;
 import java.util.*;
-
 import java.time.LocalDate;
 
+
 public class FXMLCostCounterController implements Initializable {
+
+    // Dátum vezérlő (még nem teljes)
+    public class DatePickerSample extends Application {
+
+        private Stage stage;
+        private DatePicker DateDatePicker;
+        private DatePicker DateToDatePicker;
+        private DatePicker DateFromDatePicker;
+
+        public void main(String[] args) {
+            Locale.setDefault(Locale.US);
+            launch(args);
+        }
+
+        @Override
+        public void start(Stage stage) {
+            this.stage = stage;
+            stage.setTitle("DatePickerSample ");
+            initUI();
+            stage.show();
+        }
+
+        private void initUI() {
+            VBox vbox = new VBox(20);
+            vbox.setStyle("-fx-padding: 10;");
+            Scene scene = new Scene(vbox, 400, 400);
+            stage.setScene(scene);
+            DateFromDatePicker = new DatePicker();
+            DateToDatePicker = new DatePicker();
+            DateDatePicker = new DatePicker();
+            DateDatePicker.setValue(LocalDate.now());
+            DateToDatePicker.setValue(LocalDate.now());
+            DateFromDatePicker.setValue(DateToDatePicker.getValue().plusDays(1));
+            GridPane gridPane = new GridPane();
+            gridPane.setHgap(10);
+            gridPane.setVgap(10);
+            Label checkInlabel = new Label("Check-In Date:");
+            gridPane.add(checkInlabel, 0, 0);
+            GridPane.setHalignment(checkInlabel, HPos.LEFT);
+            gridPane.add(DateFromDatePicker, 0, 1);
+            Label checkOutlabel = new Label("Check-Out Date:");
+            gridPane.add(checkOutlabel, 0, 2);
+            GridPane.setHalignment(checkOutlabel, HPos.LEFT);
+            gridPane.add(DateToDatePicker, 0, 3);
+            vbox.getChildren().add(gridPane);
+        }
+    }
+    // Dátum vezérlő vége
+
 
     PersonData personData;
     FinancialData financialData;
@@ -35,25 +92,34 @@ public class FXMLCostCounterController implements Initializable {
     private Button handleRegisterButtonPushed;
     @FXML
     private TextField handleNameTyping;
+    /*
     @FXML
     private TextField handleDateFromTyping;
     @FXML
     private TextField handleDateToTyping;
     @FXML
     private TextField handleDateTyping;
+    */
     @FXML
     private TextField handlePriceTyping;
+    @FXML
+    private DatePicker DateDatePicker;
+    @FXML
+    private DatePicker DateFromDatePicker;
+    @FXML
+    private DatePicker DateToDatePicker;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         // CostTypeChoiceBox.getItems().addAll(Arrays.toString(financialData.getTypeOfCost()));
-        CostTypeChoiceBox.getItems().addAll(costType);
+        CostTypeChoiceBoxUpLoad.getItems().addAll(costType);
         // CostTypeChoiceBox1.getItems().addAll(Arrays.toString(financialData.getTypeOfCost()));
-        CostTypeChoiceBox1.getItems().addAll(costType);
-        nameChoiceBox.getItems().addAll(jpaPersonDataDAO.getPersonData());
-        nameChoiceBox1.getItems().addAll(jpaPersonDataDAO.getPersonData());
-        nameChoiceBox.setConverter(new StringConverter<PersonData>() {
+        CostTypeChoiceBoxSearch.getItems().addAll(costType);
+        nameChoiceBoxUpLoad.getItems().addAll(jpaPersonDataDAO.getPersonData());
+        nameChoiceBoxSearch.getItems().addAll(jpaPersonDataDAO.getPersonData());
+        nameChoiceBoxUpLoad.setConverter(new StringConverter<PersonData>() {
             @Override
             public String toString(PersonData personData) {
                 return personData.getName();
@@ -88,16 +154,16 @@ public class FXMLCostCounterController implements Initializable {
     // választható opciók (lenyíló fülek)
 
     @FXML
-    private ChoiceBox<String> CostTypeChoiceBox; //költség típus lenyíló menü a költség felvétel fülön
+    private ChoiceBox<String> CostTypeChoiceBoxUpLoad; //költség típus lenyíló menü a költség felvétel fülön
 
     @FXML
-    private ChoiceBox<String> CostTypeChoiceBox1;  //költség típus lenyíló menü a keresés fülön
+    private ChoiceBox<String> CostTypeChoiceBoxSearch;  //költség típus lenyíló menü a keresés fülön
 
     @FXML
-    private ChoiceBox<PersonData> nameChoiceBox; // név lenyíló menü a költség felvétel fülön
+    private ChoiceBox<PersonData> nameChoiceBoxUpLoad; // név lenyíló menü a költség felvétel fülön
 
     @FXML
-    private ChoiceBox<PersonData> nameChoiceBox1; // név lenyíló menü a keresés fülön
+    private ChoiceBox<PersonData> nameChoiceBoxSearch; // név lenyíló menü a keresés fülön
 
     // A táblázatok vezérlése
 
@@ -144,15 +210,17 @@ public class FXMLCostCounterController implements Initializable {
         }
     }
 
+
+    // DateDatePicker.getEditor().isManaged() nem biztos hogy jó, célja hogy jelezzen ha valaik nem választott dátumot
     @FXML
     void handleDataUpLoadButtonPushed(ActionEvent event) throws Exception {
-        if (!handleDateTyping.getText().isEmpty() && !CostTypeChoiceBox.getSelectionModel().isEmpty()
-                && !handlePriceTyping.getText().isEmpty() && !nameChoiceBox.getSelectionModel().isEmpty()) {
+        if (DateDatePicker.getEditor().isManaged() && !CostTypeChoiceBoxUpLoad.getSelectionModel().isEmpty()
+                && !handlePriceTyping.getText().isEmpty() && !nameChoiceBoxUpLoad.getSelectionModel().isEmpty()) {
 
-            dateInput = LocalDate.parse(handleDateTyping.getText());
+            dateInput = LocalDate.parse((CharSequence) DateDatePicker); // (CharSequence) nem biztos hogy így helyes lesz
             priceInput = Integer.parseInt(handlePriceTyping.getText());
 
-            tyepchoice = CostTypeChoiceBox.getValue();
+            tyepchoice = CostTypeChoiceBoxUpLoad.getValue();
 
 
             /////Meg kell keresni azt a persont akit kiválasztottunk a listából,
@@ -164,29 +232,29 @@ public class FXMLCostCounterController implements Initializable {
             financialData.setCostType(FinancialData.typeOfCost.valueOf(tyepchoice));
             jpaFinancialDataDAO.saveFinancialData(financialData);
 
-            this.personData = nameChoiceBox.getValue();
+            this.personData = nameChoiceBoxUpLoad.getValue();
             this.personData.getFinancialDataList().add(financialData);
 
             jpaPersonDataDAO.savePersonData(personData);
-            nameChoiceBox.getValue().getFinancialDataList().add(financialData);
+            nameChoiceBoxUpLoad.getValue().getFinancialDataList().add(financialData);
 
             //financialData.setDateOfPurchase(LocalDate.parse());
 
             // olyan metódus kell ami a táblázatba rögzíti a kapott értékeket !!!
         } else {
-            if (nameChoiceBox1.getSelectionModel().isEmpty()) {
+            if (nameChoiceBoxSearch.getSelectionModel().isEmpty()) {
                 alert.setTitle("Hiányzó adat!");
                 alert.setHeaderText("Név megadása szükséges!");
                 alert.setContentText("Kérjük a lenyíló listából válasza ki a megfelő nevet!");
                 alert.showAndWait();
             }
-            if (CostTypeChoiceBox1.getSelectionModel().isEmpty()) {
+            if (CostTypeChoiceBoxSearch.getSelectionModel().isEmpty()) {
                 alert.setTitle("Hiányzó adat!");
                 alert.setHeaderText("Költség kategória megadása szükséges!");
                 alert.setContentText("Kérjük a lenyíló listából válaszon kategóriát!");
                 alert.showAndWait();
             }
-            if (handleDateTyping.getText().isEmpty()) {
+            if (!DateDatePicker.getEditor().isManaged()) {
                 alert.setTitle("Hiányzó adat!");
                 alert.setHeaderText("Dátum megadása szükséges!");
                 alert.setContentText("Dátum megadásánál figyeljen a helyes formátumra!\n Példa: 2022.01.01");
@@ -221,8 +289,8 @@ public class FXMLCostCounterController implements Initializable {
     */
     @FXML
     void handleSearchButtonPushed(ActionEvent event) {
-        if (!handleDateFromTyping.getText().isEmpty() && !CostTypeChoiceBox1.getSelectionModel().isEmpty()
-                && !handleDateToTyping.getText().isEmpty() && !nameChoiceBox1.getSelectionModel().isEmpty()) {
+        if (DateFromDatePicker.getEditor().isManaged() && !CostTypeChoiceBoxSearch.getSelectionModel().isEmpty()
+                && DateToDatePicker.getEditor().isManaged() && !nameChoiceBoxSearch.getSelectionModel().isEmpty()) {
             //NameColumn.setText(jpaPersonDataDAO.);
             System.out.println("műxik");
 
@@ -231,25 +299,25 @@ public class FXMLCostCounterController implements Initializable {
 
 
         } else {
-            if (nameChoiceBox1.getSelectionModel().isEmpty()) {
+            if (nameChoiceBoxSearch.getSelectionModel().isEmpty()) {
                 alert.setTitle("Hiányzó adat!");
                 alert.setHeaderText("Név megadása szükséges!");
                 alert.setContentText("Kérjük a lenyíló listából válasza ki a megfelő nevet!");
                 alert.showAndWait();
             }
-            if (CostTypeChoiceBox1.getSelectionModel().isEmpty()) {
+            if (CostTypeChoiceBoxSearch.getSelectionModel().isEmpty()) {
                 alert.setTitle("Hiányzó adat!");
                 alert.setHeaderText("Költség kategória megadása szükséges!");
                 alert.setContentText("Kérjük a lenyíló listából válaszon kategóriát!");
                 alert.showAndWait();
             }
-            if (handleDateFromTyping.getText().isEmpty()) {
+            if (!DateFromDatePicker.getEditor().isManaged()) {
                 alert.setTitle("Hiányzó adat!");
                 alert.setHeaderText("Kezdő dátum megadása szükséges!");
                 alert.setContentText("Dátum megadásánál figyeljen a helyes formátumra!\n Példa: 2022.01.01");
                 alert.showAndWait();
             }
-            if (handleDateToTyping.getText().isEmpty()) {
+            if (!DateToDatePicker.getEditor().isManaged()) {
                 alert.setTitle("Hiányzó adat!");
                 alert.setHeaderText("Befejező dátum megadása szükséges!");
                 alert.setContentText("Dátum megadásánál figyeljen a helyes formátumra!\n Példa: 2022.01.01");
@@ -260,33 +328,33 @@ public class FXMLCostCounterController implements Initializable {
 
     @FXML
     void handleAverageButtonPushed(ActionEvent event) {
-        if (!handleDateFromTyping.getText().isEmpty() && !CostTypeChoiceBox1.getSelectionModel().isEmpty()
-                && !handleDateToTyping.getText().isEmpty() && !nameChoiceBox1.getSelectionModel().isEmpty()) {
+        if (DateFromDatePicker.getEditor().isManaged() && !CostTypeChoiceBoxSearch.getSelectionModel().isEmpty()
+                && DateToDatePicker.getEditor().isManaged() && !nameChoiceBoxSearch.getSelectionModel().isEmpty()) {
 
 
             // olyan metódus kell ami a táblázatba  !!!
 
 
         } else {
-            if (nameChoiceBox1.getSelectionModel().isEmpty()) {
+            if (nameChoiceBoxSearch.getSelectionModel().isEmpty()) {
                 alert.setTitle("Hiányzó adat!");
                 alert.setHeaderText("Név megadása szükséges!");
                 alert.setContentText("Kérjük a lenyíló listából válasza ki a megfelő nevet!");
                 alert.showAndWait();
             }
-            if (CostTypeChoiceBox1.getSelectionModel().isEmpty()) {
+            if (CostTypeChoiceBoxSearch.getSelectionModel().isEmpty()) {
                 alert.setTitle("Hiányzó adat!");
                 alert.setHeaderText("Költség kategória megadása szükséges!");
                 alert.setContentText("Kérjük a lenyíló listából válaszon kategóriát!");
                 alert.showAndWait();
             }
-            if (handleDateFromTyping.getText().isEmpty()) {
+            if (!DateFromDatePicker.getEditor().isManaged()) {
                 alert.setTitle("Hiányzó adat!");
                 alert.setHeaderText("Kezdő dátum megadása szükséges!");
                 alert.setContentText("Dátum megadásánál figyeljen a helyes formátumra!\n Példa: 2022.01.01");
                 alert.showAndWait();
             }
-            if (handleDateToTyping.getText().isEmpty()) {
+            if (!DateToDatePicker.getEditor().isManaged()) {
                 alert.setTitle("Hiányzó adat!");
                 alert.setHeaderText("Befejező dátum megadása szükséges!");
                 alert.setContentText("Dátum megadásánál figyeljen a helyes formátumra!\n Példa: 2022.01.01");
