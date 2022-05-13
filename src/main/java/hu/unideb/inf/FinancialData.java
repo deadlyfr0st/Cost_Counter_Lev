@@ -11,15 +11,18 @@ public class FinancialData {
     private Integer financialID;
     @Enumerated(EnumType.STRING)
     private typeOfCost costType;
-    public enum typeOfCost{
-        TRAVEL,FOOD,ENTERTAINMENT
+
+    public enum typeOfCost {
+        TRAVEL, FOOD, ENTERTAINMENT
     }
+
     private int cost;
     private LocalDate dateOfPurchase;
 
     //////////////////////Setters Getters////////////////////////
     public FinancialData() {
     }
+
     public Integer getFinancialID() {
         return financialID;
     }

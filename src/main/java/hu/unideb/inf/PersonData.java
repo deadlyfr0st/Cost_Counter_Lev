@@ -1,4 +1,5 @@
 package hu.unideb.inf;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +10,9 @@ public class PersonData {
     @Id
     @GeneratedValue
     private Integer id;
+
     private String name;
+
     @OneToMany()
     @JoinColumn(name = "owner_personData")
     private List<FinancialData> financialDataList = new ArrayList<>();
