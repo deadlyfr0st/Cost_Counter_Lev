@@ -20,8 +20,6 @@ import java.time.LocalDate;
 
 public class FXMLCostCounterController implements Initializable {
 
-    //DatePicker datePicker = new DatePicker();
-
     PersonData personData;
 
     FinancialData financialData;
@@ -53,7 +51,7 @@ public class FXMLCostCounterController implements Initializable {
     @FXML
     private DatePicker dateTillDatePicker;
 
-    private void setConverterToWorkInDB(ChoiceBox<PersonData> nameChoiceBoxSearch) {
+    private void personDataConverterMethod(ChoiceBox<PersonData> nameChoiceBoxSearch) {
         nameChoiceBoxSearch.setConverter(new StringConverter<>() {
             @Override
             public String toString(PersonData personData) {
@@ -62,7 +60,8 @@ public class FXMLCostCounterController implements Initializable {
 
             @Override
             public PersonData fromString(String s) {
-                return jpaPersonDataDAO.getPersonData().stream().filter(personData -> s.equals(personData.getName())).findAny().orElse(null);
+                return jpaPersonDataDAO.getPersonData().stream().filter(personData
+                        -> s.equals(personData.getName())).findAny().orElse(null);
             }
         });
     }
@@ -73,8 +72,8 @@ public class FXMLCostCounterController implements Initializable {
         costTypeChoiceBoxSearch.getItems().addAll(costType);
         nameChoiceBoxUpLoad.getItems().addAll(jpaPersonDataDAO.getPersonData());
         nameChoiceBoxSearch.getItems().addAll(jpaPersonDataDAO.getPersonData());
-        setConverterToWorkInDB(nameChoiceBoxUpLoad);
-        setConverterToWorkInDB(nameChoiceBoxSearch);
+        personDataConverterMethod(nameChoiceBoxUpLoad);
+        personDataConverterMethod(nameChoiceBoxSearch);
 
         /*
         NameColumn.setCellFactory(new PropertyValueFactory<PersonData, String>(name));
@@ -193,13 +192,11 @@ public class FXMLCostCounterController implements Initializable {
             financialData.setCost(priceInput);
             financialData.setDateOfPurchase(dateInput);
             financialData.setCostType(FinancialData.typeOfCost.valueOf(typeChoiceValue));
+            jpaFinancialDataDAO.saveFinancialData(financialData);
 
             this.personData = nameChoiceBoxUpLoad.getValue();
             this.personData.getFinancialDataList().add(financialData);
-
             jpaPersonDataDAO.savePersonData(personData);
-            nameChoiceBoxUpLoad.getValue().getFinancialDataList().add(financialData);
-            jpaFinancialDataDAO.saveFinancialData(financialData);
 
             resetChoiceBoxes();
             uploadDatePicker.setValue(null);
@@ -240,8 +237,6 @@ public class FXMLCostCounterController implements Initializable {
             System.out.println("műxik");
 
 
-            // olyan metódus kell ami a táblázatba  !!!
-
 
         } else {
             if (nameChoiceBoxSearch.getSelectionModel().isEmpty()) {
@@ -276,8 +271,6 @@ public class FXMLCostCounterController implements Initializable {
         if (!costTypeChoiceBoxSearch.getSelectionModel().isEmpty()
                 && !nameChoiceBoxSearch.getSelectionModel().isEmpty()) {
 
-
-            // olyan metódus kell ami a táblázatba  !!!
 
 
         } else {
