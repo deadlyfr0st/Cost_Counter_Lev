@@ -21,7 +21,7 @@ public class JpaPersonDataDAO implements PersonDataDAO {
 
     @Override
     public List<PersonData> getPersonData() {
-        TypedQuery<PersonData> query= entityManager.createQuery(
+        TypedQuery<PersonData> query = entityManager.createQuery(
                 "SELECT a FROM PersonData a", PersonData.class);
         List<PersonData> personDataList = query.getResultList();
         return personDataList;
@@ -30,7 +30,7 @@ public class JpaPersonDataDAO implements PersonDataDAO {
     @Override
     public List<String> getAllPersonName() {
         List<String> personNames = new ArrayList<>();
-        TypedQuery<PersonData> query= entityManager.createQuery(
+        TypedQuery<PersonData> query = entityManager.createQuery(
                 "SELECT a FROM PersonData a", PersonData.class);
         List<PersonData> getAllPersonDataList = query.getResultList();
         for (PersonData personName : getAllPersonDataList) {
