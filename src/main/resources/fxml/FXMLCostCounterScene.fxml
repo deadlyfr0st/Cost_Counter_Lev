@@ -43,10 +43,11 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hu.unideb.inf.FXMLCostCounterController">
+<VBox prefHeight="433.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hu.unideb.inf.FXMLCostCounterController">
    <children>
-      <TabPane prefHeight="376.0" prefWidth="640.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane prefHeight="435.0" prefWidth="640.0" tabClosingPolicy="UNAVAILABLE">
          <tabs>
             <Tab text="FELHASZNÁLÓ RÖGZÍTÉSE">
                <content>
@@ -116,14 +117,28 @@
             </Tab>
             <Tab text="KERESÉS">
                <content>
-                  <VBox prefHeight="67.0" prefWidth="640.0">
+                  <VBox prefHeight="330.0" prefWidth="640.0">
                      <children>
+                        <HBox prefHeight="9.0" prefWidth="640.0">
+                           <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="név:" wrappingWidth="32.108070373535156">
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                              </Text>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="költség típus: " wrappingWidth="143.22522735595703">
+                                 <HBox.margin>
+                                    <Insets left="110.0" />
+                                 </HBox.margin>
+                              </Text>
+                           </children>
+                        </HBox>
                         <HBox prefHeight="27.0" prefWidth="629.0" spacing="10.0">
                            <children>
                               <ChoiceBox fx:id="nameChoiceBoxSearch" prefWidth="150.0" />
                               <ChoiceBox fx:id="costTypeChoiceBoxSearch" prefWidth="150.0" />
-                              <DatePicker fx:id="dateFromDatePicker" onAction="#getFromDate" />
-                              <DatePicker fx:id="dateTillDatePicker" onAction="#getTillDate" />
+                              <DatePicker fx:id="dateFromDatePicker" onAction="#getFromDate" promptText="dátum-tól" />
+                              <DatePicker fx:id="dateTillDatePicker" onAction="#getTillDate" promptText="dátum-ig" />
                            </children>
                            <VBox.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -138,13 +153,12 @@
                               <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
                            </VBox.margin>
                         </HBox>
-                        <TableView fx:id="tableView" prefHeight="233.0" prefWidth="640.0">
+                        <TableView fx:id="tableView" prefHeight="279.0" prefWidth="640.0">
                            <columns>
-                              <TableColumn fx:id="NameColumn" prefWidth="140.0" text="név" />
-                              <TableColumn fx:id="TypeColumn" prefWidth="128.66659545898438" text="költséghely" />
-                              <TableColumn fx:id="DateFromColumn" prefWidth="107.33331298828125" text="dátum-tól" />
-                              <TableColumn fx:id="DateToColumn" prefWidth="102.0" text="dátum-ig" />
-                              <TableColumn fx:id="PriceColumn" prefWidth="160.66668701171875" text="összeg" />
+                              <TableColumn fx:id="nameColumn" prefWidth="170.0" text="név" />
+                              <TableColumn fx:id="typeColumn" prefWidth="150.0" text="költség típus" />
+                              <TableColumn fx:id="dateColumn" prefWidth="140.0" text="dátum" />
+                              <TableColumn fx:id="priceColumn" prefWidth="170.0" text="összeg" />
                            </columns>
                         </TableView>
                      </children>
