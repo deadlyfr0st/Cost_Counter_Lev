@@ -54,6 +54,10 @@ public class FXMLCostCounterController implements Initializable {
     @FXML
     private DatePicker dateTillDatePicker;
 
+    @FXML
+    private TextField avarageField;
+
+
     private void personDataConverterMethod(ChoiceBox<PersonData> nameChoiceBoxSearch) {
         nameChoiceBoxSearch.setConverter(new StringConverter<>() {
             @Override
@@ -85,29 +89,8 @@ public class FXMLCostCounterController implements Initializable {
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("priceColumn"));
         typeColumn.setCellValueFactory(new PropertyValueFactory<>("typeColumn"));
 
-
-        /*
-        try{
-            ConnectionDB cn = new connectionDB();
-            Connection cn1 = cn.fileconnection();
-
-            String sql = "SELECT * FROM INCLUDE";
-            Statement s = cn1.createStatemenet;
-            ResultSet r = s.executeQuery(sql);
-
-            while(r.next())
-            {
-                listview.add(new TableModel(
-                r.getString("nameColumn"),
-                r.getString("dateColumn"),
-                r.getString("priceColumn"),
-                r.getString("typeColumn")
-                ));
-            }
-            tableView.setItems(listview);
-
-         */
-
+        listview.add(new TableModel());
+        tableView.setItems(listview);
     }
 
     /////Költségtípusok véglegesítése hiányzik/////
@@ -226,7 +209,7 @@ public class FXMLCostCounterController implements Initializable {
             if (typeChoiceValue.equals("Utazás")) {
                 financialData.setCostType(FinancialData.typeOfCost.TRAVEL);
             }
-            /* financialData.setCostType(FinancialData.typeOfCost.valueOf(typeChoiceValue));*/
+
             jpaFinancialDataDAO.saveFinancialData(financialData);
 
             this.personData = nameChoiceBoxUpLoad.getValue();
@@ -278,33 +261,37 @@ public class FXMLCostCounterController implements Initializable {
             for (FinancialData fc : this.personData.getFinancialDataList()) {
                 if (costTypeChoiceBoxSearch.getValue().equals("Utazás")) {
                     if (fc.getDateOfPurchase().isAfter(this.dateInputFrom) && fc.getDateOfPurchase().isBefore(this.dateInputTill) || fc.getDateOfPurchase().isEqual(this.dateInputFrom) || fc.getDateOfPurchase().isEqual(this.dateInputTill)) {
-                        System.out.println("Utazás volt 2 időpont kozott");
                         if (fc.getCostType() == FinancialData.typeOfCost.TRAVEL)
                             financialDataListRet.add(fc);
                     }
                 }
                 if (costTypeChoiceBoxSearch.getValue().equals("Élelmiszer")) {
                     if (fc.getDateOfPurchase().isAfter(this.dateInputFrom) && fc.getDateOfPurchase().isBefore(this.dateInputTill) || fc.getDateOfPurchase().isEqual(this.dateInputFrom) || fc.getDateOfPurchase().isEqual(this.dateInputTill)) {
-                        System.out.println("Élelmiszer vásárlási időpontok");
                         if (fc.getCostType() == FinancialData.typeOfCost.FOOD)
                             financialDataListRet.add(fc);
                     }
                 }
                 if (costTypeChoiceBoxSearch.getValue().equals("Szórakozás")) {
                     if (fc.getDateOfPurchase().isAfter(this.dateInputFrom) && fc.getDateOfPurchase().isBefore(this.dateInputTill) || fc.getDateOfPurchase().isEqual(this.dateInputFrom) || fc.getDateOfPurchase().isEqual(this.dateInputTill)) {
-                        System.out.println("Szórakozás időpontok");
                         if (fc.getCostType() == FinancialData.typeOfCost.ENTERTAINMENT)
                             financialDataListRet.add(fc);
                     }
                 }
             }
-            for (FinancialData fc2: financialDataListRet) {
-                System.out.println(fc2.getCostType());
-                System.out.println(fc2.getDateOfPurchase());
-                System.out.println(fc2.getCost());
+            if (financialDataListRet.isEmpty()) {
+                alert.setTitle("");
+                alert.setHeaderText("Ebben az időszakban nem volt költés");
+                alert.setContentText("");
+                alert.showAndWait();
             }
+            tableView.getItems().clear();
 
-
+            for (FinancialData fc2 : financialDataListRet) {
+                listview.add(new TableModel
+                        (nameChoiceBoxSearch.getValue().toString(), fc2.getCostType().toString(), fc2.getDateOfPurchase().toString(), String.valueOf(fc2.getCost())));
+                tableView.setItems(listview);
+                System.out.println("For után" + financialDataListRet);
+            }
         } else {
             if (nameChoiceBoxSearch.getSelectionModel().isEmpty()) {
                 alert.setTitle("Hiányzó adat!");
@@ -337,7 +324,7 @@ public class FXMLCostCounterController implements Initializable {
     void handleAverageButtonPushed(ActionEvent event) {
         if (!costTypeChoiceBoxSearch.getSelectionModel().isEmpty()
                 && !nameChoiceBoxSearch.getSelectionModel().isEmpty()) {
-
+        avarageField.setText("asd");
 
         } else {
             if (nameChoiceBoxSearch.getSelectionModel().isEmpty()) {

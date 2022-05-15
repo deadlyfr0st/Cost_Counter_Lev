@@ -40,6 +40,7 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -148,6 +149,11 @@
                            <children>
                               <Button mnemonicParsing="false" onAction="#handleSearchButtonPushed" prefHeight="30.0" prefWidth="85.0" text="KERESÉS" />
                               <Button mnemonicParsing="false" onAction="#handleAverageButtonPushed" prefHeight="30.0" prefWidth="91.0" text="ÁTLAG" />
+                              <TextField fx:id="avarageField" prefHeight="10.0" prefWidth="112.0">
+                                 <HBox.margin>
+                                    <Insets left="20.0" top="2.3" />
+                                 </HBox.margin>
+                              </TextField>
                            </children>
                            <VBox.margin>
                               <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
@@ -160,7 +166,23 @@
                               <TableColumn fx:id="dateColumn" prefWidth="140.0" text="dátum" />
                               <TableColumn fx:id="priceColumn" prefWidth="170.0" text="összeg" />
                            </columns>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
                         </TableView>
+                        <TextField fx:id="allCost" />
+                        <HBox prefHeight="30.0" prefWidth="625.0" spacing="15.0">
+                           <children>
+                              <TextArea prefHeight="200.0" prefWidth="200.0" />
+                              <TextField fx:id="név" prefHeight="10.0" prefWidth="112.0">
+                                 <HBox.margin>
+                                    <Insets left="20.0" top="2.5" />
+                                 </HBox.margin>
+                              </TextField>
+                              <TextField fx:id="típus" />
+                              <TextField fx:id="összeg" prefHeight="10.0" prefWidth="112.0" />
+                           </children>
+                        </HBox>
                      </children>
                   </VBox>
                </content>
