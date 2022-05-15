@@ -15,6 +15,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.StringConverter;
 import javafx.scene.control.DatePicker;
+import javafx.scene.text.Text;
 
 import java.net.URL;
 import java.text.DecimalFormat;
@@ -33,6 +34,7 @@ public class FXMLCostCounterController implements Initializable {
 
     JpaFinancialDataDAO jpaFinancialDataDAO = new JpaFinancialDataDAO();
 
+    /*
     @FXML
     private Button handleAverageButtonPushed;
     @FXML
@@ -41,6 +43,8 @@ public class FXMLCostCounterController implements Initializable {
     private Button handleSearchButtonPushed;
     @FXML
     private Button handleRegisterButtonPushed;
+    */
+
     @FXML
     private TextField handleNameTyping;
 
@@ -57,7 +61,7 @@ public class FXMLCostCounterController implements Initializable {
     private DatePicker dateTillDatePicker;
 
     @FXML
-    private TextField avarageField;
+    private Text avarageField;
 
 
     @FXML
@@ -65,12 +69,14 @@ public class FXMLCostCounterController implements Initializable {
 
 
     @FXML
-    private TextField típus;
+    private Text típus;
 
 
     @FXML
-    private TextField összeg;
+    private Text összeg;
 
+    @FXML
+    private Text averageTextHUN;
 
     private void personDataConverterMethod(ChoiceBox<PersonData> nameChoiceBoxSearch) {
         nameChoiceBoxSearch.setConverter(new StringConverter<>() {
@@ -175,6 +181,7 @@ public class FXMLCostCounterController implements Initializable {
                 alert.setContentText(null);
                 alert.showAndWait();
                 resetChoiceBoxes();
+                handleNameTyping.clear();
             } else {
                 alert.setAlertType(AlertType.WARNING);
                 alert.setTitle("Már regisztráltál!");
@@ -182,6 +189,7 @@ public class FXMLCostCounterController implements Initializable {
                 alert.setContentText("Navigálj a feltöltés oldalra és válaszd ki a neved a lenyíló menüből.");
                 alert.showAndWait();
             }
+
         } else {
             alert.setAlertType(AlertType.ERROR);
             alert.setTitle("Hiányzó adat!");
@@ -312,6 +320,8 @@ public class FXMLCostCounterController implements Initializable {
                 alert.showAndWait();
             }
             tableView.getItems().clear();
+            averageTextHUN.getText();
+            avarageField.getText();
 
             for (FinancialData fc2 : financialDataListRet) {
                 listview.add(new TableModel(nameChoiceBoxSearch.getValue().toString(),
@@ -363,6 +373,7 @@ public class FXMLCostCounterController implements Initializable {
                 && (dateFromDatePicker.getValue() != null) && (dateTillDatePicker.getValue() != null)) {
         final DecimalFormat df = new DecimalFormat("0 .00");
             avarageField.setText(df.format(avarage));
+            averageTextHUN.setText("átlag: ");
         } else {
             if (nameChoiceBoxSearch.getSelectionModel().isEmpty()) {
                 alert.setTitle("Hiányzó adat!");

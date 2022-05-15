@@ -16,6 +16,8 @@ public class MainApp extends Application {
 
         FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("/fxml/FXMLCostCounterScene.fxml"));
         Scene scene = new Scene(loader.load());
+        //String css = this.getClass().getResource("Styles.css").toExternalForm(); // runtime error
+        //scene.getStylesheets().add(css); // runtime error
         stage.setTitle("Cost Counter");
         stage.setScene(scene);
         stage.show();
