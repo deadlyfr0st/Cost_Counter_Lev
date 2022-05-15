@@ -17,6 +17,8 @@ import javafx.util.StringConverter;
 import javafx.scene.control.DatePicker;
 
 import java.net.URL;
+import java.text.DecimalFormat;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.time.LocalDate;
 
@@ -58,6 +60,18 @@ public class FXMLCostCounterController implements Initializable {
     private TextField avarageField;
 
 
+    @FXML
+    private TextField név;
+
+
+    @FXML
+    private TextField típus;
+
+
+    @FXML
+    private TextField összeg;
+
+
     private void personDataConverterMethod(ChoiceBox<PersonData> nameChoiceBoxSearch) {
         nameChoiceBoxSearch.setConverter(new StringConverter<>() {
             @Override
@@ -77,8 +91,8 @@ public class FXMLCostCounterController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        costTypeChoiceBoxUpLoad.getItems().addAll(costType);
-        costTypeChoiceBoxSearch.getItems().addAll(costType);
+        costTypeChoiceBoxUpLoad.getItems().addAll(costTypeUpload);
+        costTypeChoiceBoxSearch.getItems().addAll(costTypeSearch);
         nameChoiceBoxUpLoad.getItems().addAll(jpaPersonDataDAO.getPersonData());
         nameChoiceBoxSearch.getItems().addAll(jpaPersonDataDAO.getPersonData());
         personDataConverterMethod(nameChoiceBoxUpLoad);
@@ -94,7 +108,8 @@ public class FXMLCostCounterController implements Initializable {
     }
 
     /////Költségtípusok véglegesítése hiányzik/////
-    private final String[] costType = {"Élelmiszer", "Utazás", "Szórakozás"};
+    private final String[] costTypeUpload = {"Élelmiszer", "Utazás", "Szórakozás"};
+    private final String[] costTypeSearch = {"Élelmiszer", "Utazás", "Szórakozás", "Összes"};
 
     private String nameInput;
 
@@ -105,6 +120,10 @@ public class FXMLCostCounterController implements Initializable {
     private LocalDate dateInputTill;
 
     private String typeChoiceValue;
+
+    private Double avarage = 0.0;
+
+    private Double allCost = 0.0;
 
     @FXML
     private ChoiceBox<String> costTypeChoiceBoxUpLoad;
@@ -136,10 +155,10 @@ public class FXMLCostCounterController implements Initializable {
         nameChoiceBoxUpLoad.getItems().addAll(jpaPersonDataDAO.getPersonData());
         nameChoiceBoxSearch.getItems().removeAll(jpaPersonDataDAO.getPersonData());
         nameChoiceBoxSearch.getItems().addAll(jpaPersonDataDAO.getPersonData());
-        costTypeChoiceBoxUpLoad.getItems().removeAll(costType);
-        costTypeChoiceBoxUpLoad.getItems().addAll(costType);
-        costTypeChoiceBoxSearch.getItems().removeAll(costType);
-        costTypeChoiceBoxSearch.getItems().addAll(costType);
+        costTypeChoiceBoxUpLoad.getItems().removeAll(costTypeUpload);
+        costTypeChoiceBoxUpLoad.getItems().addAll(costTypeUpload);
+        costTypeChoiceBoxSearch.getItems().removeAll(costTypeSearch);
+        costTypeChoiceBoxSearch.getItems().addAll(costTypeSearch);
     }
 
     @FXML
@@ -250,6 +269,9 @@ public class FXMLCostCounterController implements Initializable {
 
     @FXML
     void handleSearchButtonPushed(ActionEvent event) {
+        int counter = 0;
+        avarage = 0.0;
+        allCost = 0.0;
         if (!nameChoiceBoxSearch.getSelectionModel().isEmpty() && !costTypeChoiceBoxSearch.getSelectionModel().isEmpty()
                 && (dateFromDatePicker.getValue() != null) && (dateTillDatePicker.getValue() != null)) {
             List<FinancialData> financialDataListRet = new ArrayList<>();
@@ -277,6 +299,11 @@ public class FXMLCostCounterController implements Initializable {
                             financialDataListRet.add(fc);
                     }
                 }
+                if (costTypeChoiceBoxSearch.getValue().equals("Összes")) {
+                    if (fc.getDateOfPurchase().isAfter(this.dateInputFrom) && fc.getDateOfPurchase().isBefore(this.dateInputTill) || fc.getDateOfPurchase().isEqual(this.dateInputFrom) || fc.getDateOfPurchase().isEqual(this.dateInputTill)) {
+                            financialDataListRet.add(fc);
+                    }
+                }
             }
             if (financialDataListRet.isEmpty()) {
                 alert.setTitle("");
@@ -287,11 +314,21 @@ public class FXMLCostCounterController implements Initializable {
             tableView.getItems().clear();
 
             for (FinancialData fc2 : financialDataListRet) {
-                listview.add(new TableModel
-                        (nameChoiceBoxSearch.getValue().toString(), fc2.getCostType().toString(), fc2.getDateOfPurchase().toString(), String.valueOf(fc2.getCost())));
+                listview.add(new TableModel(nameChoiceBoxSearch.getValue().toString(),
+                        fc2.getCostType().toString(),
+                        fc2.getDateOfPurchase().toString(),
+                        String.valueOf(fc2.getCost())));
                 tableView.setItems(listview);
-                System.out.println("For után" + financialDataListRet);
+                avarage += fc2.getCost();
+                counter++;
             }
+            final DecimalFormat df = new DecimalFormat();
+            allCost = avarage;
+            avarage = avarage / counter;
+
+            long nOfDaysBetween = ChronoUnit.DAYS.between(dateInputFrom, dateInputTill);
+            típus.setText(Long.toString(nOfDaysBetween));
+            összeg.setText(df.format(allCost));
         } else {
             if (nameChoiceBoxSearch.getSelectionModel().isEmpty()) {
                 alert.setTitle("Hiányzó adat!");
@@ -322,10 +359,10 @@ public class FXMLCostCounterController implements Initializable {
 
     @FXML
     void handleAverageButtonPushed(ActionEvent event) {
-        if (!costTypeChoiceBoxSearch.getSelectionModel().isEmpty()
-                && !nameChoiceBoxSearch.getSelectionModel().isEmpty()) {
-        avarageField.setText("asd");
-
+        if (!nameChoiceBoxSearch.getSelectionModel().isEmpty() && !costTypeChoiceBoxSearch.getSelectionModel().isEmpty()
+                && (dateFromDatePicker.getValue() != null) && (dateTillDatePicker.getValue() != null)) {
+        final DecimalFormat df = new DecimalFormat("0 .00");
+            avarageField.setText(df.format(avarage));
         } else {
             if (nameChoiceBoxSearch.getSelectionModel().isEmpty()) {
                 alert.setTitle("Hiányzó adat!");
