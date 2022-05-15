@@ -85,7 +85,7 @@ public class FXMLCostCounterController implements Initializable {
     }
 
     /////Költségtípusok véglegesítése hiányzik/////
-    private final String[] costType = {"Élelmiszer", "TRAVEL", "Szórakozás"};
+    private final String[] costType = {"Élelmiszer", "Utazás", "Szórakozás"};
 
     private String nameInput;
 
@@ -191,11 +191,23 @@ public class FXMLCostCounterController implements Initializable {
             financialData = new FinancialData();
             financialData.setCost(priceInput);
             financialData.setDateOfPurchase(dateInput);
-            financialData.setCostType(FinancialData.typeOfCost.valueOf(typeChoiceValue));
+
+            //Enum elemzes
+            if(typeChoiceValue.equals("Szórakozás")){
+                financialData.setCostType(FinancialData.typeOfCost.ENTERTAINMENT);
+            }
+            if(typeChoiceValue.equals("Élelmiszer")){
+                financialData.setCostType(FinancialData.typeOfCost.FOOD);
+            }
+            if(typeChoiceValue.equals("Utazás")){
+                financialData.setCostType(FinancialData.typeOfCost.TRAVEL);
+            }
+           /* financialData.setCostType(FinancialData.typeOfCost.valueOf(typeChoiceValue));*/
             jpaFinancialDataDAO.saveFinancialData(financialData);
 
             this.personData = nameChoiceBoxUpLoad.getValue();
             this.personData.getFinancialDataList().add(financialData);
+
             jpaPersonDataDAO.savePersonData(personData);
 
             resetChoiceBoxes();
@@ -233,8 +245,45 @@ public class FXMLCostCounterController implements Initializable {
     void handleSearchButtonPushed(ActionEvent event) {
         if (!nameChoiceBoxSearch.getSelectionModel().isEmpty() && !costTypeChoiceBoxSearch.getSelectionModel().isEmpty()
                 && (dateFromDatePicker.getValue() != null) && (dateTillDatePicker.getValue() != null)) {
-            //NameColumn.setText(jpaPersonDataDAO.);
-            System.out.println("műxik");
+            List<FinancialData> financialDataListRet = new ArrayList<>();
+
+            this.dateInputFrom= dateFromDatePicker.getValue();
+            this.dateInputTill= dateTillDatePicker.getValue();
+            this.personData = nameChoiceBoxSearch.getValue();
+
+            for (FinancialData fc: this.personData.getFinancialDataList()){
+                if (costTypeChoiceBoxSearch.getValue().equals("Utazás")){
+                    if (fc.getDateOfPurchase().isAfter(this.dateInputFrom) && fc.getDateOfPurchase().isBefore(this.dateInputTill) ){
+                        System.out.println("Utazás volt 2 időpont kozott");
+                        if(fc.getCostType()== FinancialData.typeOfCost.TRAVEL)
+                            financialDataListRet.add(fc);
+                    }
+                }
+                if (costTypeChoiceBoxSearch.getValue().equals("Élelmiszer")){
+                    if (fc.getDateOfPurchase().isAfter(this.dateInputFrom) && fc.getDateOfPurchase().isBefore(this.dateInputTill) ) {
+                        System.out.println("Élelmiszer vásárlási időpontok");
+                        System.out.println(fc.getDateOfPurchase());
+                        if(fc.getCostType()== FinancialData.typeOfCost.FOOD)
+                            financialDataListRet.add(fc);
+                    }
+                }
+                if (costTypeChoiceBoxSearch.getValue().equals("Szórakozás")){
+                    if (fc.getDateOfPurchase().isAfter(this.dateInputFrom) && fc.getDateOfPurchase().isBefore(this.dateInputTill) ) {
+                        System.out.println("Szórakozás időpontok");
+                        System.out.println(fc.getDateOfPurchase());
+                        if(fc.getCostType()== FinancialData.typeOfCost.ENTERTAINMENT)
+                            financialDataListRet.add(fc);
+                    }
+                }
+            }
+
+
+
+
+
+
+
+
 
 
 
