@@ -217,16 +217,16 @@ public class FXMLCostCounterController implements Initializable {
             financialData.setDateOfPurchase(dateInput);
 
             //Enum elemzes
-            if(typeChoiceValue.equals("Szórakozás")){
+            if (typeChoiceValue.equals("Szórakozás")) {
                 financialData.setCostType(FinancialData.typeOfCost.ENTERTAINMENT);
             }
-            if(typeChoiceValue.equals("Élelmiszer")){
+            if (typeChoiceValue.equals("Élelmiszer")) {
                 financialData.setCostType(FinancialData.typeOfCost.FOOD);
             }
-            if(typeChoiceValue.equals("Utazás")){
+            if (typeChoiceValue.equals("Utazás")) {
                 financialData.setCostType(FinancialData.typeOfCost.TRAVEL);
             }
-           /* financialData.setCostType(FinancialData.typeOfCost.valueOf(typeChoiceValue));*/
+            /* financialData.setCostType(FinancialData.typeOfCost.valueOf(typeChoiceValue));*/
             jpaFinancialDataDAO.saveFinancialData(financialData);
 
             this.personData = nameChoiceBoxUpLoad.getValue();
@@ -271,44 +271,38 @@ public class FXMLCostCounterController implements Initializable {
                 && (dateFromDatePicker.getValue() != null) && (dateTillDatePicker.getValue() != null)) {
             List<FinancialData> financialDataListRet = new ArrayList<>();
 
-            this.dateInputFrom= dateFromDatePicker.getValue();
-            this.dateInputTill= dateTillDatePicker.getValue();
+            this.dateInputFrom = dateFromDatePicker.getValue();
+            this.dateInputTill = dateTillDatePicker.getValue();
             this.personData = nameChoiceBoxSearch.getValue();
 
-            for (FinancialData fc: this.personData.getFinancialDataList()){
-                if (costTypeChoiceBoxSearch.getValue().equals("Utazás")){
-                    if (fc.getDateOfPurchase().isAfter(this.dateInputFrom) && fc.getDateOfPurchase().isBefore(this.dateInputTill) ){
+            for (FinancialData fc : this.personData.getFinancialDataList()) {
+                if (costTypeChoiceBoxSearch.getValue().equals("Utazás")) {
+                    if (fc.getDateOfPurchase().isAfter(this.dateInputFrom) && fc.getDateOfPurchase().isBefore(this.dateInputTill) || fc.getDateOfPurchase().isEqual(this.dateInputFrom) || fc.getDateOfPurchase().isEqual(this.dateInputTill)) {
                         System.out.println("Utazás volt 2 időpont kozott");
-                        if(fc.getCostType()== FinancialData.typeOfCost.TRAVEL)
+                        if (fc.getCostType() == FinancialData.typeOfCost.TRAVEL)
                             financialDataListRet.add(fc);
                     }
                 }
-                if (costTypeChoiceBoxSearch.getValue().equals("Élelmiszer")){
-                    if (fc.getDateOfPurchase().isAfter(this.dateInputFrom) && fc.getDateOfPurchase().isBefore(this.dateInputTill) ) {
+                if (costTypeChoiceBoxSearch.getValue().equals("Élelmiszer")) {
+                    if (fc.getDateOfPurchase().isAfter(this.dateInputFrom) && fc.getDateOfPurchase().isBefore(this.dateInputTill) || fc.getDateOfPurchase().isEqual(this.dateInputFrom) || fc.getDateOfPurchase().isEqual(this.dateInputTill)) {
                         System.out.println("Élelmiszer vásárlási időpontok");
-                        System.out.println(fc.getDateOfPurchase());
-                        if(fc.getCostType()== FinancialData.typeOfCost.FOOD)
+                        if (fc.getCostType() == FinancialData.typeOfCost.FOOD)
                             financialDataListRet.add(fc);
                     }
                 }
-                if (costTypeChoiceBoxSearch.getValue().equals("Szórakozás")){
-                    if (fc.getDateOfPurchase().isAfter(this.dateInputFrom) && fc.getDateOfPurchase().isBefore(this.dateInputTill) ) {
+                if (costTypeChoiceBoxSearch.getValue().equals("Szórakozás")) {
+                    if (fc.getDateOfPurchase().isAfter(this.dateInputFrom) && fc.getDateOfPurchase().isBefore(this.dateInputTill) || fc.getDateOfPurchase().isEqual(this.dateInputFrom) || fc.getDateOfPurchase().isEqual(this.dateInputTill)) {
                         System.out.println("Szórakozás időpontok");
-                        System.out.println(fc.getDateOfPurchase());
-                        if(fc.getCostType()== FinancialData.typeOfCost.ENTERTAINMENT)
+                        if (fc.getCostType() == FinancialData.typeOfCost.ENTERTAINMENT)
                             financialDataListRet.add(fc);
                     }
                 }
             }
-
-
-
-
-
-
-
-
-
+            for (FinancialData fc2: financialDataListRet) {
+                System.out.println(fc2.getCostType());
+                System.out.println(fc2.getDateOfPurchase());
+                System.out.println(fc2.getCost());
+            }
 
 
         } else {
@@ -343,7 +337,6 @@ public class FXMLCostCounterController implements Initializable {
     void handleAverageButtonPushed(ActionEvent event) {
         if (!costTypeChoiceBoxSearch.getSelectionModel().isEmpty()
                 && !nameChoiceBoxSearch.getSelectionModel().isEmpty()) {
-
 
 
         } else {
