@@ -1,5 +1,7 @@
 package hu.unideb.inf;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -10,6 +12,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.StringConverter;
 import javafx.scene.control.DatePicker;
 
@@ -66,6 +69,8 @@ public class FXMLCostCounterController implements Initializable {
         });
     }
 
+    ObservableList<TableModel> listview = FXCollections.observableArrayList();
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         costTypeChoiceBoxUpLoad.getItems().addAll(costType);
@@ -75,13 +80,34 @@ public class FXMLCostCounterController implements Initializable {
         personDataConverterMethod(nameChoiceBoxUpLoad);
         personDataConverterMethod(nameChoiceBoxSearch);
 
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("nameColumn"));
+        dateColumn.setCellValueFactory(new PropertyValueFactory<>("dateColumn"));
+        priceColumn.setCellValueFactory(new PropertyValueFactory<>("priceColumn"));
+        typeColumn.setCellValueFactory(new PropertyValueFactory<>("typeColumn"));
+
+
         /*
-        NameColumn.setCellFactory(new PropertyValueFactory<PersonData, String>(name));
-        TypeColumn.setCellFactory(new PropertyValueFactory<FinancialData, String>(type));
-        PriceColumn.setCellFactory(new PropertyValueFactory<FinancialData, Integer>(price));
-        DateFromColumn.setCellFactory(new PropertyValueFactory<FinancialData, LocalDate>(dateFrom));
-        DateToColumn.setCellFactory(new PropertyValueFactory<FinancialData, LocalDate>(dateFrom));
-        */
+        try{
+            ConnectionDB cn = new connectionDB();
+            Connection cn1 = cn.fileconnection();
+
+            String sql = "SELECT * FROM INCLUDE";
+            Statement s = cn1.createStatemenet;
+            ResultSet r = s.executeQuery(sql);
+
+            while(r.next())
+            {
+                listview.add(new TableModel(
+                r.getString("nameColumn"),
+                r.getString("dateColumn"),
+                r.getString("priceColumn"),
+                r.getString("typeColumn")
+                ));
+            }
+            tableView.setItems(listview);
+
+         */
+
     }
 
     /////Költségtípusok véglegesítése hiányzik/////
@@ -110,17 +136,15 @@ public class FXMLCostCounterController implements Initializable {
     private ChoiceBox<PersonData> nameChoiceBoxSearch;
 
     @FXML
-    private TableView<PersonData> tableView;
+    private TableView<TableModel> tableView;
     @FXML
-    private TableColumn<FinancialData, LocalDate> DateFromColumn;
+    private TableColumn<TableModel, String> dateColumn;
     @FXML
-    private TableColumn<FinancialData, LocalDate> DateToColumn;
+    private TableColumn<TableModel, String> nameColumn;
     @FXML
-    private TableColumn<PersonData, String> NameColumn;
+    private TableColumn<TableModel, String> priceColumn;
     @FXML
-    private TableColumn<FinancialData, Integer> PriceColumn;
-    @FXML
-    private TableColumn<FinancialData, String> TypeColumn;
+    private TableColumn<TableModel, String> typeColumn;
 
     Alert alert = new Alert(AlertType.INFORMATION);
 
