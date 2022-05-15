@@ -1,13 +1,16 @@
 package hu.unideb.inf;
 
 public class TableModel {
-    String dateColumn, nameColumn, priceColumn, typeColumn;
+    String nameColumn, typeColumn, dateColumn, priceColumn;
 
-    public TableModel(String dateColumn, String nameColumn, String priceColumn, String typeColumn) {
-        this.dateColumn = dateColumn;
+    public TableModel(){
+    }
+
+    public TableModel(String nameColumn, String typeColumn, String dateColumn, String priceColumn) {
         this.nameColumn = nameColumn;
-        this.priceColumn = priceColumn;
         this.typeColumn = typeColumn;
+        this.dateColumn = dateColumn;
+        this.priceColumn = priceColumn;
     }
 
     public String getDateColumn() {
