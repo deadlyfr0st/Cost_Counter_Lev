@@ -286,7 +286,7 @@ public class FXMLCostCounterController implements Initializable {
 
             long nOfDaysBetween = ChronoUnit.DAYS.between(dateInputFrom, dateInputTill);
             típus.setText(Long.toString(nOfDaysBetween));
-            összeg.setText(df.format(allCost));
+            összeg.setText(df.format(allCost ) + " Ft");
         } else {
             showAlertBox();
         }

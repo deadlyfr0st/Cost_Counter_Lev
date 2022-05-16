@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.h2.tools.Server;
 
+import java.io.File;
 import java.sql.*;
 
 public class MainApp extends Application {
@@ -16,8 +17,8 @@ public class MainApp extends Application {
 
         FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("/fxml/FXMLCostCounterScene.fxml"));
         Scene scene = new Scene(loader.load());
-        //String css = this.getClass().getResource("Styles.css").toExternalForm(); // runtime error
-        //scene.getStylesheets().add(css); // runtime error
+        File f = new File("src/main/resources/styles/Styles.css");
+        scene.getStylesheets().add("file:///" + f.getAbsolutePath().replace("\\", "/"));
         stage.setTitle("Cost Counter");
         stage.setScene(scene);
         stage.show();
