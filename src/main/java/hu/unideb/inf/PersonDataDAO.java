@@ -14,6 +14,4 @@ public interface PersonDataDAO extends AutoCloseable {
 
     public void deletePersonData(PersonData a); //delete
 
-    public void searchPersonData(PersonData a); //search
-
 }

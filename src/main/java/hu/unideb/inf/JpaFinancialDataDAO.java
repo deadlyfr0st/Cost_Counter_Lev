@@ -7,7 +7,8 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 
 public class JpaFinancialDataDAO implements FinancialDataDAO {
-    private final EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("br.com.fredericci.pu");
+    private final EntityManagerFactory entityManagerFactory
+            = Persistence.createEntityManagerFactory("br.com.fredericci.pu");
     private final EntityManager entityManager = entityManagerFactory.createEntityManager();
 
     @Override
@@ -19,7 +20,8 @@ public class JpaFinancialDataDAO implements FinancialDataDAO {
 
     @Override
     public List<FinancialData> getFinancialDataDAO() {
-        TypedQuery<FinancialData> query = entityManager.createQuery("SELECT a FROM FinancialData a  ", FinancialData.class);
+        TypedQuery<FinancialData> query
+                = entityManager.createQuery("SELECT a FROM FinancialData a  ", FinancialData.class);
         return query.getResultList();
     }
 

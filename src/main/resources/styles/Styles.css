@@ -1,5 +1,15 @@
 .root{
-    -fx-background-image: url("kalaposMacska.jpg");
+    -fx-background-color: rgba(30, 148, 107, 0.82);
+}
+
+#img{
+    -fx-image: url("kalaposMacska.jpg");
+    -fx-background-radius: 50%;
+}
+
+.text{
+    -fx-font-weight: bold;
+    -fx-font-style: italic;
 }
 
 .label{

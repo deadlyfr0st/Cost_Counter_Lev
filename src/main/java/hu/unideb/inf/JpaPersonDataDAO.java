@@ -8,7 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class JpaPersonDataDAO implements PersonDataDAO {
-    private final EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("br.com.fredericci.pu");
+    private final EntityManagerFactory entityManagerFactory
+            = Persistence.createEntityManagerFactory("br.com.fredericci.pu");
     private final EntityManager entityManager = entityManagerFactory.createEntityManager();
 
     @Override
@@ -51,18 +52,6 @@ public class JpaPersonDataDAO implements PersonDataDAO {
         entityManager.getTransaction().begin();
         entityManager.remove(a);
         entityManager.getTransaction().commit();
-    }
-
-    @Override
-    //// adja vissza a persondata, minden attributumma oszt lehet vele tovabb
-
-    public void searchPersonData(PersonData a) {
-
-       /* public String {
-            TypedQuery<PersonData> query= entityManager.createQuery(
-                    "SELECT a FROM PersonData a WHERE name= a;
-            return PersonData;*/
-
     }
 
     @Override
