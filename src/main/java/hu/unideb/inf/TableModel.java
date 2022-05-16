@@ -3,7 +3,7 @@ package hu.unideb.inf;
 public class TableModel {
     String nameColumn, typeColumn, dateColumn, priceColumn;
 
-    public TableModel(){
+    public TableModel() {
     }
 
     public TableModel(String nameColumn, String typeColumn, String dateColumn, String priceColumn) {
